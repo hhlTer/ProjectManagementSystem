@@ -1,8 +1,15 @@
 package controler.commands;
 
-import controler.JDBCStorage;
-import enumerated.TypeCRUD;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
-public interface SQLMaker {
-    void handlerCommand(JDBCStorage jdbcStorage, String tableName, String[] param);
+public interface SQLMaker<T> {
+    T selectFromTableById(long id) throws SQLException;
+    void insertIntoTable(T t) throws SQLException;
+    void updateInTable(T t) throws SQLException;
+    void eraseTable() throws SQLException;
+    ArrayList<T> getAllDataTable() throws SQLException;
+
+
+//    void handlerCommand(JDBCStorage jdbcStorage, TypeTable tableName, String[] param, String[] data);
 }

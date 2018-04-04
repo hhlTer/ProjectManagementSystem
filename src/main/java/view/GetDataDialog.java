@@ -1,6 +1,6 @@
 package view;
 
-import controler.JDBCStorage;
+import controler.main.JDBCStorage;
 import controler.commands.SQLMaker;
 import enumerated.TypeCRUD;
 
@@ -14,14 +14,14 @@ public class GetDataDialog {
 
     private Map<TypeCRUD, Map<String, SQLMaker>> sqlMap;
 
-    JDBCStorage jdbcStorage;
+    private JDBCStorage jdbcStorage; //TODO Delete
 
-    void init(){
+    void init(){//@todo ?????????????
         jdbcStorage = new JDBCStorage();
         initPrepareStatements();
     }
 
-    void initPrepareStatements(){
+    private void initPrepareStatements(){//TODO ??????
         sqlMap = new HashMap<>();
 
         Map<String, SQLMaker> tableMap = new HashMap<>();
