@@ -16,6 +16,6 @@ public class MainJDBC {
 
         ArrayList developers = new ArrayList<>();
         developers = d.getAllDataTable();
-        developers.forEach(System.out::println);
+        Table.printAsTable(developers);
     }
 }
