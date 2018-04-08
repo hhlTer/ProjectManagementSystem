@@ -12,6 +12,7 @@ public class Customer {
 
     public String[] getParam(){
         return new String[]{
+                "id:",
                 "customer_name",
                 "adress"
         };

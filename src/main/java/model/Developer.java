@@ -56,8 +56,19 @@ public class Developer {
                 , sex? "male" : "female", salary.longValue());
     }
 
+    public String[] getAll(){
+        return new String[]{
+            String.valueOf(id),
+            name,
+            String.valueOf(age),
+            String.valueOf(sex),
+            String.valueOf(salary)
+        };
+    }
+
     public static String[] getParam() {
         return new String[]{
+                "id",
                 "first_name",
                 "age",
                 "sex",

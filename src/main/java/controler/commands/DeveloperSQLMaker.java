@@ -29,6 +29,7 @@ public class DeveloperSQLMaker extends MainMaker implements SQLMaker<Developer> 
             System.out.println("Wrong id");
             return null;
         } else {
+            developer.setId(id);
             developer.setName(rs.getString("first_name"));
             developer.setAge(rs.getInt("age"));
             developer.setSex(rs.getBoolean("sex"));
@@ -42,11 +43,11 @@ public class DeveloperSQLMaker extends MainMaker implements SQLMaker<Developer> 
         PreparedStatement preparedStatement = jdbcStorage.getPrepareStatementsMap()
                 .get(TypeTable.developers)
                 .get(TypeCRUD.CREATE);
-        preparedStatement.setLong(1, developer.getId());
-        preparedStatement.setString(2, developer.getName());
-        preparedStatement.setInt(3, developer.getAge());
-        preparedStatement.setBoolean(4, developer.isSex());
-        preparedStatement.setBigDecimal(5, developer.getSalary());
+//        preparedStatement.setLong(1, developer.getId());
+        preparedStatement.setString(1, developer.getName());
+        preparedStatement.setInt(2, developer.getAge());
+        preparedStatement.setBoolean(3, developer.isSex());
+        preparedStatement.setBigDecimal(4, developer.getSalary());
 
         preparedStatement.executeUpdate();
     }
@@ -56,7 +57,13 @@ public class DeveloperSQLMaker extends MainMaker implements SQLMaker<Developer> 
         PreparedStatement preparedStatement = jdbcStorage.getPrepareStatementsMap()
                 .get(TypeTable.developers)
                 .get(TypeCRUD.UPDATE);
-        preparedStatement.setLong(1, developer.getId());
+        preparedStatement.setString(1, developer.getName());
+        preparedStatement.setInt(2, developer.getAge());
+        preparedStatement.setBoolean(3, developer.isSex());
+        preparedStatement.setBigDecimal(4, developer.getSalary());
+        preparedStatement.setLong(5, developer.getId());
+
+        System.out.println(preparedStatement);
         preparedStatement.executeUpdate();
     }
 
@@ -64,9 +71,17 @@ public class DeveloperSQLMaker extends MainMaker implements SQLMaker<Developer> 
     public void eraseTable() throws SQLException {
         PreparedStatement preparedStatement = jdbcStorage.getPrepareStatementsMap()
                 .get(TypeTable.developers)
-                .get(TypeCRUD.DELETE);
+                .get(TypeCRUD.ERASE);
         preparedStatement.executeUpdate();
+    }
 
+    @Override
+    public void deleteCortege(long id) throws SQLException {
+        PreparedStatement preparedStatement = jdbcStorage.getPrepareStatementsMap()
+                .get(TypeTable.developers)
+                .get(TypeCRUD.DELETE);
+        preparedStatement.setLong(1, id);
+        preparedStatement.executeUpdate();
     }
 
     @Override
@@ -79,6 +94,7 @@ public class DeveloperSQLMaker extends MainMaker implements SQLMaker<Developer> 
         ResultSet rs = ps.executeQuery();
         while (rs.next()){
             Developer developer = new Developer();
+            developer.setId(rs.getLong("id"));
             developer.setName(rs.getString("first_name"));
             developer.setAge(rs.getInt("age"));
             developer.setSex(rs.getBoolean("sex"));

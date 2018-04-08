@@ -15,6 +15,7 @@ public class Projects {
 
     public String[] getParam(){
         return new String[]{
+                "id:",
                 "company_name",
                 "adress"
         };

@@ -8,6 +8,7 @@ public interface SQLMaker<T> {
     void insertIntoTable(T t) throws SQLException;
     void updateInTable(T t) throws SQLException;
     void eraseTable() throws SQLException;
+    void deleteCortege(long id) throws SQLException;
     ArrayList<T> getAllDataTable() throws SQLException;
 
 

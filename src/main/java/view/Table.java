@@ -25,10 +25,9 @@ public class Table {
         }
 
 
-        for (int i = 0; i < arrayVolumes.size(); i++) {
-            String[] temp = arrayVolumes.get(i);
+        for (String[] temp : arrayVolumes) {
             for (int j = 0; j < COUNT_COLUMN; j++) {
-                if (LENGTH_NNN[j] < temp[j].length()){
+                if (LENGTH_NNN[j] < temp[j].length()) {
                     LENGTH_NNN[j] = temp[j].length();
                 }
             }
@@ -54,9 +53,10 @@ public class Table {
 //        System.out.println(line("`", LENGTH_NNN));
 //        System.out.println(line("_", LENGTH_NNN));
 
-        for (int i = 0; i < arrayVolumes.size(); i++) {
+        for (String[] arrayVolume : arrayVolumes) {
             System.out.print("|");
-            String[] lineWorlds = arrayVolumes.get(i);
+            String[] lineWorlds;
+            lineWorlds = arrayVolume;
             for (int j = 0; j < COUNT_COLUMN; j++) {
                 StringBuilder gaps = new StringBuilder();
                 for (int k = 0; k < LENGTH_NNN[j] - lineWorlds[j].length(); k++) {
@@ -71,9 +71,9 @@ public class Table {
 
     private static String line (String chars, int[] lll){
         StringBuilder l = new StringBuilder();
-        for (int i = 0; i < lll.length; i++) {
+        for (int aLll : lll) {
             l.append("  ");
-            for (int j = 0; j < lll[i]+2; j++) {
+            for (int j = 0; j < aLll + 2; j++) {
                 l.append(chars);
             }
         }
@@ -87,6 +87,7 @@ public class Table {
     public static void printAsTable(String[] namesCol, String[] data){
 //sets lohg of table
         //
+
         ArrayList<String[]> temp = new ArrayList<>();
         final int COUNT_COL = namesCol.length;
         final int COUNT_DAT = data.length;

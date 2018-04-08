@@ -62,6 +62,7 @@ public class JDBCStorage {
     private PreparedStatement prepareSelectByIdStatement; //ReadById
     private PreparedStatement prepareUpdateStatement; //Update
     private PreparedStatement prepareDeleteStatement; //Delete
+    private PreparedStatement preparedEraseStatement; //Erase
 
 
     private void initConnection() {
@@ -153,6 +154,7 @@ public class JDBCStorage {
             case CREATE: return getPrepareInsertStatement(typeTable);
             case READ_BY_ID: return getPrepareSelectByIdStatement(typeTable);
             case DELETE: return getPrepareDeleteStatement(typeTable);
+            case ERASE: return getPrepareEraseStatement(typeTable);
             case READ: return getPrepareSelectStatement(typeTable);
         }
         return null;
@@ -179,18 +181,25 @@ public class JDBCStorage {
         initPrepareStatements(tableName, TypeCRUD.DELETE);
         return prepareDeleteStatement;
     }
+    private PreparedStatement getPrepareEraseStatement(TypeTable tableName) {
+        initPrepareStatements(tableName, TypeCRUD.ERASE);
+        return preparedEraseStatement;
+    }
+
 
     private void initPrepareStatements(TypeTable typeTable, TypeCRUD typeCRUD) {
         String[] param = getParamTable(typeTable); //get fields array of current table
+        assert param != null;
+        param = Arrays.copyOfRange(param, 1, param.length);
         if (typeCRUD == TypeCRUD.CREATE) initCreateStatements(typeTable.name(), param);
-        if (typeCRUD == TypeCRUD.READ) initReadStatements(typeTable.name(), param);
+        if (typeCRUD == TypeCRUD.READ) initReadStatements(typeTable.name(), getParamTable(typeTable));
         if (typeCRUD == TypeCRUD.READ_BY_ID) initReadByIdStatements(typeTable.name(), param);
         if (typeCRUD == TypeCRUD.UPDATE) initUpdateStatements(typeTable.name(), param);
         if (typeCRUD == TypeCRUD.DELETE) initDeleteStatements(typeTable.name());
+        if (typeCRUD == TypeCRUD.ERASE) initEraseStatements(typeTable.name());
     }
 
     //================4======================
-
 
     private void initReadStatements(String tableName, String[] param) {
         String s = param[0].equals("*") ? param[0] :
@@ -220,18 +229,25 @@ public class JDBCStorage {
 
     private void initUpdateStatements(String tableName, String[] param) {
         String s = Arrays.stream(param)
+                .map(str -> str + " = ?")
                 .collect(Collectors.joining(","));
         String q = countQ(param.length);
         String sql = String.format(
-                "UPDATE INTO %s(%s) VALUES (%s) WHERE id = ?", tableName, s, q);
+                "UPDATE %s SET %s WHERE id = ?", tableName, s);
         initStatement(sql, TypeCRUD.UPDATE);
     }
 
+    private void initEraseStatements(String tableName) {
+        String sql = String.format(
+                "DELETE * FROM %s", tableName);
+        initStatement(sql, TypeCRUD.ERASE);
+    }
     private void initDeleteStatements(String tableName) {
         String sql = String.format(
                 "DELETE FROM %s WHERE id = ?", tableName);
         initStatement(sql, TypeCRUD.DELETE);
     }
+
 
     //////////////////////////////////////////////////////
     private String countQ(int count) {
@@ -253,12 +269,16 @@ public class JDBCStorage {
                 case DELETE:
                     prepareDeleteStatement = connection.prepareStatement(sql);
                     break;
+                case ERASE:
+                    preparedEraseStatement = connection.prepareStatement(sql);
+                    break;
                 case UPDATE:
                     prepareUpdateStatement = connection.prepareStatement(sql);
                     break;
                 case READ_BY_ID:
                     prepareSelectByIdStatement = connection.prepareStatement(sql);
                     break;
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -272,7 +292,7 @@ public class JDBCStorage {
     private String[] getParamTable(TypeTable typeTable){
         switch (typeTable){
             case developers:
-                return new Developer().getParam();
+                return Developer.getParam();
             case companies:
                 return new Company().getParam();
             case projects:

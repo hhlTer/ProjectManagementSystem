@@ -22,6 +22,7 @@ public class Company {
 
     public String[] getParam(){
         return new String[]{
+                "id:",
                 "company_name",
                 "adress"
         };
