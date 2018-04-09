@@ -3,6 +3,7 @@ package view;
 import controler.main.JDBCStorage;
 import enumerated.TypeTable;
 import view.DialogMakerInterface.DialogMaker;
+import view.DialogMakerInterface.DialogMakerCustomer;
 import view.DialogMakerInterface.DialogMakerDevelopers;
 import view.DialogMakerInterface.DialogMakerProjects;
 
@@ -23,7 +24,7 @@ public class MainJDBC {
         }
 
         System.out.println("Choice the table\n" +
-                "[D]evelopers, [P]roject\n" +
+                "[D]evelopers, [P]roject, [C]ustomers, C[o]mpanies\n" +
                 "[E]xit");
 
         // Table choise dialog
@@ -31,7 +32,7 @@ public class MainJDBC {
 
         DialogMaker dialog = () -> null;
 
-        char c = DialogService.getAnswer("dpe");
+        char c = DialogService.getAnswer("dpeco");
         switch (c){
             case 'd':
                 dialog = dialogMaker(TypeTable.developers);
@@ -39,11 +40,16 @@ public class MainJDBC {
             case 'p':
                 dialog = dialogMaker(TypeTable.projects);
                 break;
+            case 'c':
+                dialog = dialogMaker(TypeTable.customers);
+                break;
+            case 'o':
+                dialog = dialogMaker(TypeTable.companies);
+                break;
             case 'e':
                 System.err.println("Bye!");
+                System.exit(0);
                 break;
-            default:                 dialog = dialogMaker(TypeTable.developers);
-
         }
 
         //Command choise dialog
@@ -96,10 +102,12 @@ public class MainJDBC {
     private static DialogMaker dialogMaker(TypeTable tables) {
         if (tables == TypeTable.developers) {
             return new DialogMakerDevelopers();
-        }
-        else if (tables == TypeTable.projects) {
+        }else if (tables == TypeTable.projects) {
             return new DialogMakerProjects();
+        }else if (tables == TypeTable.customers){
+            return new DialogMakerCustomer();
         }
-        throw new RuntimeException("Wrong table name");
+
+        throw new RuntimeException("Table " + tables.name() + " not added in project");
     }
 }
