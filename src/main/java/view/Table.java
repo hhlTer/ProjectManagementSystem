@@ -17,12 +17,12 @@ public class Table {
         //lengthNNN[1] = ("10").length = 2
 
         final int COUNT_COLUMN = nameColumn.length; // 1. id, 2. name, 3. last_name, 4. skill, 5. salary
-        final int[] LENGTH_COL = new int[COUNT_COLUMN];
+//        final int[] LENGTH_COL = new int[COUNT_COLUMN];
         final int[] LENGTH_NNN = new int[COUNT_COLUMN];
 
-        for (int i = 0; i < COUNT_COLUMN; i++) {
-            LENGTH_COL[i] = LENGTH_NNN[i] = (nameColumn[i].length()+2);
-        }
+//        for (int i = 0; i < COUNT_COLUMN; i++) {
+//            LENGTH_COL[i] = LENGTH_NNN[i] = (nameColumn[i].length()+2);
+//        }
 
 
         for (String[] temp : arrayVolumes) {
@@ -80,52 +80,13 @@ public class Table {
         return l.toString();
     }
 
-    public static void printAsTable(ArrayList list){
-
-    }
-
     public static void printAsTable(String[] namesCol, String[] data){
 //sets lohg of table
         //
 
         ArrayList<String[]> temp = new ArrayList<>();
-        final int COUNT_COL = namesCol.length;
-        final int COUNT_DAT = data.length;
-
-        int lengthTable;
-        int lengthColumn = 0;
-        int lengthData = 0;
-        for (int i = 0; i < COUNT_COL; i++) {
-            if (namesCol[i].length() > lengthColumn) lengthColumn = namesCol[i].length();
-            if (data[i].length() > lengthData) lengthData = data[i].length();
-        }
-        for (String[] datas:
-             temp) {
-            for (int i = 0; i < COUNT_COL; i++) {
-                if (datas[i].length() > lengthData) lengthData = data[i].length();
-            }
-        }
-        lengthTable = lengthColumn + 2 + lengthData + 2;
-
-        for (int i = 0; i < COUNT_COL; i++) {
-            for (int j = 0; j < lengthTable+2; j++) {
-                System.out.print('-');
-            }
-            System.out.println();
-            System.out.print("| " + namesCol[i]);
-            for (int j = namesCol[i].length(); j < lengthColumn; j++) {
-                System.out.print(' ');
-            }
-
-            System.out.print(" | " + data[i]);
-            for (int j = data[i].length(); j < lengthData+1; j++) {
-                System.out.print(' ');
-            }
-            System.out.println('|');
-        }
-        for (int j = 0; j < lengthTable+2; j++) {
-            System.out.print('-');
-        }
+        temp.add(data);
+        printAsTable(namesCol, temp);
     }
 
     public static void printTextFormat(String[] namesCol, String[] data){

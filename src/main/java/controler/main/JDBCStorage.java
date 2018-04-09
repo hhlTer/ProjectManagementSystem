@@ -47,9 +47,26 @@ public class JDBCStorage {
     private Connection connection;
     private Statement statement;
 
+    private void initConnection() {
+        String connectionURI = String.format("jdbc:mysql://%s/%s?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", SERVER_PATCH, DB_NAME);
+        try {
+            connection = DriverManager.getConnection(connectionURI, DB_LOGIN, DB_PASSWORD);
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * prepare statements CRUD realization
      */
+    public PreparedStatement getAllSalaryPrepareStatement() throws SQLException {
+        return connection.prepareStatement
+                ("SELECT id_project, project_name, SUM(salary) as summa FROM developer_project_mtm\n" +
+                        "LEFT JOIN developers ON developer_project_mtm.id_developer = developers.id\n" +
+                        "LEFT JOIN projects ON developer_project_mtm.id_developer = projects.id\n" +
+                        "WHERE id_project = ?");
+    }
+
     //main Map with statements
     private Map<TypeTable, Map<TypeCRUD, PreparedStatement>> prepareStatementsMap;
     public Map<TypeTable, Map<TypeCRUD, PreparedStatement>> getPrepareStatementsMap() {
@@ -65,16 +82,6 @@ public class JDBCStorage {
     private PreparedStatement prepareDeleteStatement; //Delete
     private PreparedStatement preparedEraseStatement; //Erase
 
-
-    private void initConnection() {
-        String connectionURI = String.format("jdbc:mysql://%s/%s?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", SERVER_PATCH, DB_NAME);
-        try {
-            connection = DriverManager.getConnection(connectionURI, DB_LOGIN, DB_PASSWORD);
-            statement = connection.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void initDB() {
         try {
@@ -343,7 +350,71 @@ public class JDBCStorage {
                             "  adress VARCHAR(255));");
             ps.addBatch();
 
+            ps = connection.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS skills(\n" +
+                    "  id INT PRIMARY KEY,\n" +
+                    "  skill VARCHAR(100),\n" +
+                    "  grade VARCHAR(100)\n" +
+                    ");"
+            );
+            ps.addBatch();
+
+            ps = connection.prepareStatement(
+               "CREATE TABLE IF NOT EXISTS developers_skill_mtm(\n" +
+                    "  id INT PRIMARY KEY AUTO_INCREMENT,\n" +
+                    "  id_developer INT,\n" +
+                    "  id_skill INT,\n" +
+                    "  FOREIGN KEY (id_developer) REFERENCES developers(id),\n" +
+                    "  FOREIGN KEY (id_skill) REFERENCES skills(id)\n" +
+                    ");"
+            );
             ps.executeBatch();
+
+            ps = connection.prepareStatement(
+            "CREATE TABLE IF NOT EXISTS company_customer_mtm (\n" +
+                    "  id int PRIMARY KEY AUTO_INCREMENT,\n" +
+                    "  id_company INT NOT NULL,\n" +
+                    "  id_customer INT NOT NULL,\n" +
+                    "  FOREIGN KEY (id_company) REFERENCES companies(id),\n" +
+                    "  FOREIGN KEY (id_customer) REFERENCES customers(id)\n" +
+                    ");"
+            );
+            ps.executeBatch();
+
+            ps = connection.prepareStatement(
+            "CREATE TABLE IF NOT EXISTS company_project_mtm(\n" +
+                    "  id INT PRIMARY KEY AUTO_INCREMENT,\n" +
+                    "  id_company INT NOT NULL,\n" +
+                    "  id_project INT NOT NULL,\n" +
+                    "  FOREIGN KEY (id_company) REFERENCES companies(id),\n" +
+                    "  FOREIGN KEY (id_project) REFERENCES projects(id)\n" +
+                    ");"
+            );
+            ps.executeBatch();
+
+            ps = connection.prepareStatement(
+            "CREATE TABLE IF NOT EXISTS customer_project_mtm(\n" +
+                    "  id INT PRIMARY KEY AUTO_INCREMENT,\n" +
+                    "  id_customer INT NOT NULL,\n" +
+                    "  id_project INT NOT NULL,\n" +
+                    "  FOREIGN KEY (id_customer) REFERENCES customers(id),\n" +
+                    "  FOREIGN KEY (id_project) REFERENCES projects(id)\n" +
+                    ");"
+            );
+            ps.executeBatch();
+
+            ps = connection.prepareStatement(
+            "CREATE TABLE IF NOT EXISTS developer_project_mtm(\n" +
+                    "  id INT PRIMARY KEY AUTO_INCREMENT,\n" +
+                    "  id_developer INT NOT NULL,\n" +
+                    "  id_project INT NOT NULL,\n" +
+                    "  FOREIGN KEY (id_developer) REFERENCES developers(id),\n" +
+                    "  FOREIGN KEY (id_project) REFERENCES projects(id)\n" +
+                    ");"
+            );
+            ps.executeBatch();
+
+
             connection.setAutoCommit(true);
         }catch (SQLException e){
             System.out.println("Init Tables error");

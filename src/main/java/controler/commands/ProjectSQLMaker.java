@@ -5,13 +5,15 @@ import enumerated.TypeCRUD;
 import enumerated.TypeTable;
 import model.Developer;
 import model.Project;
+import view.Table;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class ProjectSQLMaker extends MainMaker implements SQLMaker<Project> {
+public class ProjectSQLMaker extends MainMaker implements SQLMaker<Project>, AdvancedSQL {
 
     public ProjectSQLMaker(JDBCStorage initJdbcStorage) {
         super(initJdbcStorage);
@@ -106,5 +108,30 @@ public class ProjectSQLMaker extends MainMaker implements SQLMaker<Project> {
             projectArrayList.add(project);
         }
         return projectArrayList;
+    }
+
+    @Override
+    public void getSalary(Project project) {
+        try {
+            PreparedStatement ps = jdbcStorage.getAllSalaryPrepareStatement();
+            ps.setLong(1, project.getId());
+
+            String[] column = new String[]{
+                "id",
+                "project",
+                "sum salary"
+            };
+            String[] param = new String[3];
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.first()){
+                param[0] = String.valueOf(rs.getLong(1));
+                param[1] = rs.getString(2);
+                param[2] = String.valueOf(rs.getBigDecimal(3));
+            }
+            Table.printAsTable(column, param);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

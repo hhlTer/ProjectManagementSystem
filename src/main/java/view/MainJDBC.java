@@ -14,80 +14,84 @@ public class MainJDBC {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Hi!");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            System.out.println("sleepMainCatch");
-        }
-
-        System.out.println("Choice the table\n" +
-                "[D]evelopers, [P]roject, [C]ustomers, C[o]mpanies\n" +
-                "[E]xit");
-
-        // Table choise dialog
-
-
-        DialogMaker dialog = () -> null;
-
-        char c = DialogService.getAnswer("dpeco");
-        switch (c){
-            case 'd':
-                dialog = dialogMaker(TypeTable.developers);
-                break;
-            case 'p':
-                dialog = dialogMaker(TypeTable.projects);
-                break;
-            case 'c':
-                dialog = dialogMaker(TypeTable.customers);
-                break;
-            case 'o':
-                dialog = dialogMaker(TypeTable.companies);
-                break;
-            case 'e':
-                System.err.println("Bye!");
-                System.exit(0);
-                break;
-        }
-
-        //Command choise dialog
         do {
-            long idl;
-            System.out.println("Choose command:");
-            System.out.println("Crea[t]e, [U]pdate, [R]ead, [L]ist, [D]elete, [C]lear");
-            System.out.println("[E]xit");
-            char c2 = DialogService.getAnswer("turldce");
-            switch (c2) {
-//Create
-                case 't':
-                    dialog.dialogMake().createDialog();
-                    break;
-//Read
-                case 'r':
-                    dialog.dialogMake().readDialog();
-                    break;
-//SELECT * FROM
-                case 'l':
-                    dialog.dialogMake().listDialog();
-                    break;
-//Delete where id =
-                case 'd':
-                    dialog.dialogMake().deleteDialog();
-                    break;
-//Clear table
-                case 'c':
-                    dialog.dialogMake().eraseDialog();
-                    break;
-//Update table
-                case 'u':
-                    dialog.dialogMake().updateDialog();
-                    break;
-//Exit
-                case 'e':
-                    System.out.println("Bye!");
-                    System.exit(0);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println("sleepMainCatch");
             }
-        }
-        while (true) ;
+
+            System.out.println("Choice the table\n" +
+                    "[D]evelopers | [P]roject  | [C]ustomers  | C[o]mpanies\n" +
+                    "[A]dvance    | [E]xit");
+
+            // Table choise dialog
+
+
+            DialogMaker dialog = () -> null;
+
+            char c = DialogService.getAnswer("dpecoa");
+            switch (c) {
+                case 'd':
+                    dialog = dialogMaker(TypeTable.developers);
+                    break;
+                case 'p':
+                    dialog = dialogMaker(TypeTable.projects);
+                    break;
+                case 'c':
+                    dialog = dialogMaker(TypeTable.customers);
+                    break;
+                case 'o':
+                    dialog = dialogMaker(TypeTable.companies);
+                    break;
+                case 'a':
+                    new AdvancedDialog().getData();
+                    continue;
+                case 'e':
+                    System.err.println("Bye!");
+                    System.exit(0);
+                    break;
+            }
+
+            //Command choise dialog
+            do {
+                long idl;
+                System.out.println("Choose command:");
+                System.out.println("Crea[t]e, [U]pdate, [R]ead, [L]ist, [D]elete, [C]lear");
+                System.out.println("[E]xit");
+                char c2 = DialogService.getAnswer("turldce");
+                switch (c2) {
+//Create
+                    case 't':
+                        dialog.dialogMake().createDialog();
+                        break;
+//Read
+                    case 'r':
+                        dialog.dialogMake().readDialog();
+                        break;
+//SELECT * FROM
+                    case 'l':
+                        dialog.dialogMake().listDialog();
+                        break;
+//Delete where id =
+                    case 'd':
+                        dialog.dialogMake().deleteDialog();
+                        break;
+//Clear table
+                    case 'c':
+                        dialog.dialogMake().eraseDialog();
+                        break;
+//Update table
+                    case 'u':
+                        dialog.dialogMake().updateDialog();
+                        break;
+//Exit
+                    case 'e':
+                        System.out.println("Bye!");
+                        System.exit(0);
+                }
+            }while (true);//choose command dialog
+        }while (true);//main dialog
     }
 
 //        SQLMaker d = new DeveloperSQLMaker(storage);
