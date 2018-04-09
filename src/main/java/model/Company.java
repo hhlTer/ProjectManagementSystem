@@ -15,16 +15,34 @@ public class Company {
         this.adress = adress;
     }
 
+    public long getId() {
+        return id;
+    }
+    public String getCompany_name() {
+        return company_name;
+    }
+    public String getAdress() {
+        return adress;
+    }
+
     @Override
     public String toString() {
         return String.format("Company :%s\naddress: %s\n", company_name, adress);
     }
 
-    public String[] getParam(){
+    public static String[] getParam(){
         return new String[]{
-                "id:",
+                "id",
                 "company_name",
                 "adress"
+        };
+    }
+
+    public String[] getAll(){
+        return new String[]{
+                String.valueOf(id),
+                company_name,
+                adress
         };
     }
 }

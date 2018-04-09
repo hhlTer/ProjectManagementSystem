@@ -3,26 +3,24 @@ package controler.commands;
 import controler.main.JDBCStorage;
 import enumerated.TypeCRUD;
 import enumerated.TypeTable;
-import model.Customer;
+import model.Company;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static controler.commands.MainMaker.jdbcStorage;
+public class CompanySQLMaker extends MainMaker implements SQLMaker<Company> {
 
-public class CustomerSQLMaker extends MainMaker implements SQLMaker<Customer> {
-
-    public CustomerSQLMaker(JDBCStorage initJdbcStorage) {
+    public CompanySQLMaker(JDBCStorage initJdbcStorage) {
         super(initJdbcStorage);
     }
 
     @Override
-    public Customer selectFromTableById(long id) throws SQLException {
-        Customer customer = new Customer();
+    public Company selectFromTableById(long id) throws SQLException {
+        Company company = new Company();
         PreparedStatement preparedStatement = jdbcStorage.getPrepareStatementsMap()
-                .get(TypeTable.customers)
+                .get(TypeTable.companies)
                 .get(TypeCRUD.READ_BY_ID);
 
         preparedStatement.setLong(1, id);
@@ -31,42 +29,43 @@ public class CustomerSQLMaker extends MainMaker implements SQLMaker<Customer> {
             System.out.println("Wrong id");
             return null;
         } else {
-            customer.setId(id);
-            customer.setCustomer_name(rs.getString(Customer.getParam()[1]));
-            customer.setAdress(rs.getString(Customer.getParam()[2]));
+            company.setId(id);
+            company.setCompany_name(rs.getString(Company.getParam()[1]));
+            company.setAdress(rs.getString(Company.getParam()[2]));
         }
-        return customer;
+        return company;
     }
 
     @Override
-    public void insertIntoTable(Customer customer) throws SQLException {
+    public void insertIntoTable(Company company) throws SQLException {
         PreparedStatement preparedStatement = jdbcStorage.getPrepareStatementsMap()
-                .get(TypeTable.customers)
+                .get(TypeTable.companies)
                 .get(TypeCRUD.CREATE);
 
-        preparedStatement.setString(1, customer.getCustomer_name());
-        preparedStatement.setString(2, customer.getAdress());
+        preparedStatement.setString(1, company.getCompany_name());
+        preparedStatement.setString(2, company.getAdress());
 
         preparedStatement.executeUpdate();
     }
 
     @Override
-    public void updateInTable(Customer customer) throws SQLException {
+    public void updateInTable(Company company) throws SQLException {
         PreparedStatement preparedStatement = jdbcStorage.getPrepareStatementsMap()
-                .get(TypeTable.customers)
+                .get(TypeTable.companies)
                 .get(TypeCRUD.UPDATE);
 
-        preparedStatement.setString(1, customer.getCustomer_name());
-        preparedStatement.setString(2, customer.getAdress());
-        preparedStatement.setLong(3, customer.getId());
+        preparedStatement.setString(1, company.getCompany_name());
+        preparedStatement.setString(2, company.getAdress());
+        preparedStatement.setLong(3, company.getId());
 
         preparedStatement.executeUpdate();
+
     }
 
     @Override
     public void eraseTable() throws SQLException {
         PreparedStatement preparedStatement = jdbcStorage.getPrepareStatementsMap()
-                .get(TypeTable.customers)
+                .get(TypeTable.companies)
                 .get(TypeCRUD.ERASE);
 
         preparedStatement.executeUpdate();
@@ -75,30 +74,29 @@ public class CustomerSQLMaker extends MainMaker implements SQLMaker<Customer> {
     @Override
     public void deleteCortege(long id) throws SQLException {
         PreparedStatement preparedStatement = jdbcStorage.getPrepareStatementsMap()
-                .get(TypeTable.customers)
+                .get(TypeTable.companies)
                 .get(TypeCRUD.DELETE);
         preparedStatement.setLong(1, id);
         preparedStatement.executeUpdate();
     }
 
     @Override
-    public ArrayList<Customer> getAllDataTable() throws SQLException {
-        ArrayList<Customer> customerArrayList = new ArrayList<>();
+    public ArrayList<Company> getAllDataTable() throws SQLException {
+        ArrayList<Company> companies = new ArrayList<>();
         PreparedStatement ps = jdbcStorage.getPrepareStatementsMap()
-                .get(TypeTable.customers)
+                .get(TypeTable.companies)
                 .get(TypeCRUD.READ);
 
-        String[] param = Customer.getParam();
+        String[] param = Company.getParam();
 
         ResultSet rs = ps.executeQuery();
         while (rs.next()){
-            Customer customer = new Customer();
-            customer.setId(rs.getLong(param[0]));
-            customer.setCustomer_name(rs.getString(param[1]));
-            customer.setAdress(rs.getString(param[2]));
+            Company company = new Company();
+            company.setId(rs.getLong(param[0]));
+            company.setCompany_name(rs.getString(param[1]));
+            company.setAdress(rs.getString(param[2]));
 
-            customerArrayList.add(customer);
+            companies.add(company);
         }
-        return customerArrayList;
-    }
+        return companies;       }
 }

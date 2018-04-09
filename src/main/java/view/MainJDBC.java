@@ -2,10 +2,7 @@ package view;
 
 import controler.main.JDBCStorage;
 import enumerated.TypeTable;
-import view.DialogMakerInterface.DialogMaker;
-import view.DialogMakerInterface.DialogMakerCustomer;
-import view.DialogMakerInterface.DialogMakerDevelopers;
-import view.DialogMakerInterface.DialogMakerProjects;
+import view.DialogMakerInterface.*;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -106,6 +103,8 @@ public class MainJDBC {
             return new DialogMakerProjects();
         }else if (tables == TypeTable.customers){
             return new DialogMakerCustomer();
+        }else if (tables == TypeTable.companies){
+            return new DialogMakerCompany();
         }
 
         throw new RuntimeException("Table " + tables.name() + " not added in project");
