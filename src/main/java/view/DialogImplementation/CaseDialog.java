@@ -6,5 +6,5 @@ public interface CaseDialog {
     void listDialog();
     void updateDialog();
     void deleteDialog();
-    void clearDialog();
+    void eraseDialog();
 }

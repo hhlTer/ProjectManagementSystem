@@ -1,16 +1,12 @@
 package view;
 
-import controler.commands.DeveloperSQLMaker;
-import controler.commands.SQLMaker;
 import controler.main.JDBCStorage;
 import enumerated.TypeTable;
-import model.Developer;
-import view.DialogImplementation.CaseDialog;
 import view.DialogMakerInterface.DialogMaker;
 import view.DialogMakerInterface.DialogMakerDevelopers;
+import view.DialogMakerInterface.DialogMakerProjects;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainJDBC {
@@ -76,7 +72,7 @@ public class MainJDBC {
                     break;
 //Clear table
                 case 'c':
-                    dialog.dialogMake().clearDialog();
+                    dialog.dialogMake().eraseDialog();
                     break;
 //Update table
                 case 'u':
@@ -101,9 +97,9 @@ public class MainJDBC {
         if (tables == TypeTable.developers) {
             return new DialogMakerDevelopers();
         }
-//        else if (tables == TypeTable.customers) {
-//            return new DialogMakerProjects();
-//        }
+        else if (tables == TypeTable.projects) {
+            return new DialogMakerProjects();
+        }
         throw new RuntimeException("Wrong table name");
     }
 }

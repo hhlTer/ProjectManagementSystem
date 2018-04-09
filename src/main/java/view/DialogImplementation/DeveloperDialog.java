@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class DeveloperDialog implements CaseDialog {
-    private SQLMaker developerSQLMaker = new DeveloperSQLMaker(MainJDBC.storage);
+    private SQLMaker<Developer> developerSQLMaker = new DeveloperSQLMaker(MainJDBC.storage);
     private Developer developer;
     private ArrayList<Developer> developers;
 
@@ -45,7 +45,7 @@ public class DeveloperDialog implements CaseDialog {
             }
         }
 // Add developer to project?
-//        service.addToMtm(developer, new Projects(), new ProjectDialog(), developersCRUD);
+//        service.addToMtm(developer, new Project(), new ProjectDialog(), developersCRUD);
 // Show project for Developer?
 
     }
@@ -92,8 +92,16 @@ public class DeveloperDialog implements CaseDialog {
     }
 
     @Override
-    public void clearDialog() {
-
+    public void eraseDialog() {
+        System.out.println("Erase table?\n[Y]es/[N]o?");
+        char answer = DialogService.getAnswer("yn");
+        if (answer == 'y'){
+            try {
+                developerSQLMaker.eraseTable();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void fillDeveloper(Developer developer){

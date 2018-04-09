@@ -12,19 +12,15 @@ public class Developer {
     public void setId(long id) {
         this.id = id;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public void setAge(int age) {
         this.age = age;
     }
-
     public void setSex(boolean sex) {
         this.sex = sex;
     }
-
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
@@ -32,19 +28,15 @@ public class Developer {
     public long getId() {
         return id;
     }
-
     public String getName() {
         return name;
     }
-
     public int getAge() {
         return age;
     }
-
     public boolean isSex() {
         return sex;
     }
-
     public BigDecimal getSalary() {
         return salary;
     }

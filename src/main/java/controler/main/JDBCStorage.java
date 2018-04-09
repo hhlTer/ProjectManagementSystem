@@ -5,7 +5,7 @@ import enumerated.TypeTable;
 import model.Company;
 import model.Customer;
 import model.Developer;
-import model.Projects;
+import model.Project;
 
 import java.sql.*;
 import java.util.Arrays;
@@ -32,6 +32,7 @@ public class JDBCStorage {
         initDB();
         initConnection();
         initPrepareStatements();
+        initTables();
     }
 
     /**
@@ -296,13 +297,57 @@ public class JDBCStorage {
             case companies:
                 return new Company().getParam();
             case projects:
-                return new Projects().getParam();
+                return new Project().getParam();
             case customers:
                 return new Customer().getParam();
             case skills:
                 return new Developer.Skill().getParam();
             default:
                 return null;
+        }
+    }
+
+    private void initTables() {
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement ps;
+            ps = connection.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS developers(\n" +
+                            "  id INT PRIMARY KEY AUTO_INCREMENT,\n" +
+                            "  first_name VARCHAR(100),\n" +
+                            "  age INT(2),\n" +
+                            "  sex BOOLEAN,\n" +
+                            "  salary DECIMAL);");
+            ps.addBatch();
+
+            ps = connection.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS projects(\n" +
+                            "  id INT PRIMARY KEY AUTO_INCREMENT,\n" +
+                            "  project_name VARCHAR(100),\n" +
+                            "  description VARCHAR(255),\n" +
+                            "  cost DECIMAL(10));"
+            );
+            ps.addBatch();
+
+            ps = connection.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS companies(\n" +
+                            "  id INT PRIMARY KEY AUTO_INCREMENT,\n" +
+                            "  company_name VARCHAR(100),\n" +
+                            "  adress VARCHAR(255));");
+            ps.addBatch();
+
+            ps = connection.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS customers(\n" +
+                            "  id INT PRIMARY KEY AUTO_INCREMENT,\n" +
+                            "  customer_name VARCHAR(100),\n" +
+                            "  adress VARCHAR(255));");
+            ps.addBatch();
+
+            ps.executeBatch();
+            connection.setAutoCommit(true);
+        }catch (SQLException e){
+            System.out.println("Init Tables error");
+            e.printStackTrace();
         }
     }
 

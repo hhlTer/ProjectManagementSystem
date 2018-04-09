@@ -63,7 +63,6 @@ public class DeveloperSQLMaker extends MainMaker implements SQLMaker<Developer> 
         preparedStatement.setBigDecimal(4, developer.getSalary());
         preparedStatement.setLong(5, developer.getId());
 
-        System.out.println(preparedStatement);
         preparedStatement.executeUpdate();
     }
 
