@@ -1,5 +1,6 @@
 package controler.commands;
 
+import com.sun.org.apache.regexp.internal.RE;
 import controler.main.JDBCStorage;
 import enumerated.TypeSkill;
 import model.Project;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AdvanceSQLMaker extends MainMaker implements AdvancedSQL{
+    private String skillColName;
     public AdvanceSQLMaker(JDBCStorage initJdbcStorage) {
         super(initJdbcStorage);
     }
@@ -67,9 +69,9 @@ public class AdvanceSQLMaker extends MainMaker implements AdvancedSQL{
     }
 
     @Override
-    public void showDevelopersSkill(String skill) {
+    public void showDevelopersSkill(String skill, String skillColName) {
         try {
-            PreparedStatement ps = jdbcStorage.getListDeveloperAsSkill();
+            PreparedStatement ps = jdbcStorage.getListDeveloperAsSkill(skillColName);
             ps.setString(1, skill);
             ResultSet rs = ps.executeQuery();
             ArrayList<String[]> strings = new ArrayList<>();
@@ -87,6 +89,34 @@ public class AdvanceSQLMaker extends MainMaker implements AdvancedSQL{
             };
             Table.printAsTable(column, strings);
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showDevelopersGrade(String grade, String skillColName) {
+        showDevelopersSkill(grade, skillColName);
+    }
+
+    @Override
+    public void showCountOfDeveloperByProject(Project project) {
+        try {
+            PreparedStatement ps = jdbcStorage.getCountDevelopersOfProject();
+            ps.setLong(1, project.getId());
+            ResultSet rs = ps.executeQuery();
+            String[] data = new String[1];
+            if (rs.first()){
+                    data  = new String[]{
+                            rs.getString(1),
+                            String.valueOf(rs.getInt(2))
+                    };
+            }
+            String[] column = new String[]{
+                    "Project",
+                    "Count of developers"
+            };
+            Table.printAsTable(column, data);
+        }catch (SQLException e){
             e.printStackTrace();
         }
     }

@@ -74,12 +74,21 @@ public class JDBCStorage {
                 "WHERE id_project = ?;");
     }
 
-    public PreparedStatement getListDeveloperAsSkill() throws SQLException{
+    public PreparedStatement getListDeveloperAsSkill(String skillColumnName) throws SQLException{
         return connection.prepareStatement(
                 "SELECT developers.first_name, skills.skill FROM developers_skill_mtm\n" +
                         "LEFT JOIN developers ON developers_skill_mtm.id_developer = developers.id\n" +
                         "LEFT JOIN skills ON developers_skill_mtm.id_skill = skills.id\n" +
-                        "WHERE skills.skill LIKE ?"
+                        "WHERE skills."+ skillColumnName + " LIKE ?"
+        );
+    }
+
+    public PreparedStatement getCountDevelopersOfProject() throws SQLException{
+        return connection.prepareStatement(
+                "SELECT projects.project_name AS Project, COUNT(developers.first_name) as count_of_developers FROM developer_project_mtm\n" +
+                        "LEFT JOIN developers ON developer_project_mtm.id_developer = developers.id\n" +
+                        "LEFT JOIN projects ON developer_project_mtm.id_project = projects.id\n" +
+                        "WHERE developer_project_mtm.id_project = ?"
         );
     }
 

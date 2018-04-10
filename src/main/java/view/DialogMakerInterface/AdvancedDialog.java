@@ -32,10 +32,12 @@ public class AdvancedDialog {
             System.out.println(" 1 - salary all developers of project");
             System.out.println(" 2 - list of all developers of project");
             System.out.println(" 3 - list of all developers as skill");
+            System.out.println(" 4 - list of all developers as grade");
+            System.out.println(" 5 - list count of all developers in project");
             System.out.println(" 0 - Exit");
 
 
-            char ans = DialogService.getAnswer("1230");
+            char ans = DialogService.getAnswer("123450");
             switch (ans){
                 case '1':
                     caseProject();
@@ -47,7 +49,16 @@ public class AdvancedDialog {
                     break;
                 case '3':
                     String skill = caseSkill();
-                    advancedSQL.showDevelopersSkill(skill);
+                    advancedSQL.showDevelopersSkill(skill, "skill");
+                    break;
+                case '4':
+                    String grade = caseGrade();
+                    advancedSQL.showDevelopersGrade(grade, "grade");
+                    break;
+                case '5':
+                    caseProject();
+                    advancedSQL.showCountOfDeveloperByProject(project);
+                    break;
                 case '0':
                     flag = false;
                     break;
@@ -86,5 +97,13 @@ public class AdvancedDialog {
                ans == '2' ? "c#" :
                ans == '3' ? "c++" :
                             "js";
+    }
+    private String caseGrade(){
+        System.out.println("Chose developers grade");
+        System.out.println("[1] - junior\n[2] - middle\n[3] - senior\n");
+        char ans = DialogService.getAnswer("1234");
+        return ans == '1' ? "junior" :
+               ans == '2' ? "middle" :
+                            "senior";
     }
 }
