@@ -2,6 +2,7 @@ package controler.main;
 
 import controler.commands.DeveloperSQLMaker;
 import controler.commands.SQLMaker;
+import enumerated.TypeSkill;
 import model.Developer;
 import view.Table;
 
@@ -12,29 +13,8 @@ import java.util.Arrays;
 
 public class Temp {
     public static void main(String[] args) throws SQLException {
-        String[] s1 = new String[] {
-                "111",
-                "121",
-                "1133"
-        };
-        String[] s2 = new String[]{
-                "1123234111",
-                "34",
-                "1323133"
-        };
-        String[] s3 = new String[]{
-                "2111",
-                "22",
-                "2133"
-        };
-        ArrayList<String[]> strings = new ArrayList<>();
-        strings.add(s2);
-        strings.add(s3);
-
-        Table.printAsTable(s1,strings);
-
-        JDBCStorage storage = new JDBCStorage();
-//        SQLMaker d = new DeveloperSQLMaker(storage);
+        System.out.println();
+        //        SQLMaker d = new DeveloperSQLMaker(storage);
 //
 //        ArrayList<Developer> developers = new ArrayList<>();
 //        developers = d.getAllDataTable();

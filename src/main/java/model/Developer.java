@@ -68,22 +68,41 @@ public class Developer {
         };
     }
 
-    public static class Skill {
+    public final static class Skill {
         private long id;
         private String skill;
         private String grade;
 
-        @Override
-        public String toString() {
-            return String.format("id :%d\nSkill: %s\nGrade: %s\n", id, skill, grade);
+        public long getId() {
+            return id;
+        }
+        public String getSkill() {
+            return skill;
+        }
+        public String getGrade() {
+            return grade;
         }
 
-        public String[] getParam() {
+        @Override
+        public String toString() {
+            return String.format("id :%d\nTypeSkill: %s\nGrade: %s\n", id, skill, grade);
+        }
+
+        public static String[] getParam() {
             return new String[]{
                     "id",
                     "skill",
                     "grade",
             };
         }
+
+        public String[] getAll(){
+            return new String[]{
+                String.valueOf(id),
+                skill,
+                grade
+            };
+        }
+
     }
 }

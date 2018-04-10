@@ -74,6 +74,15 @@ public class JDBCStorage {
                 "WHERE id_project = ?;");
     }
 
+    public PreparedStatement getListDeveloperAsSkill() throws SQLException{
+        return connection.prepareStatement(
+                "SELECT developers.first_name, skills.skill FROM developers_skill_mtm\n" +
+                        "LEFT JOIN developers ON developers_skill_mtm.id_developer = developers.id\n" +
+                        "LEFT JOIN skills ON developers_skill_mtm.id_skill = skills.id\n" +
+                        "WHERE skills.skill LIKE ?"
+        );
+    }
+
     //main Map with statements
     private Map<TypeTable, Map<TypeCRUD, PreparedStatement>> prepareStatementsMap;
     public Map<TypeTable, Map<TypeCRUD, PreparedStatement>> getPrepareStatementsMap() {

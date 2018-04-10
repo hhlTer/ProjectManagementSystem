@@ -1,6 +1,7 @@
 package controler.commands;
 
 import controler.main.JDBCStorage;
+import enumerated.TypeSkill;
 import model.Project;
 import view.Table;
 
@@ -61,6 +62,31 @@ public class AdvanceSQLMaker extends MainMaker implements AdvancedSQL{
             };
             Table.printAsTable(column, strings);
         }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showDevelopersSkill(String skill) {
+        try {
+            PreparedStatement ps = jdbcStorage.getListDeveloperAsSkill();
+            ps.setString(1, skill);
+            ResultSet rs = ps.executeQuery();
+            ArrayList<String[]> strings = new ArrayList<>();
+            if (rs.first()){
+                while (rs.next()){
+                    strings.add(new String[]{
+                            rs.getString(1),
+                            rs.getString(2)
+                    });
+                }
+            }
+            String[] column = new String[]{
+                    "Developer name",
+                    "Skill"
+            };
+            Table.printAsTable(column, strings);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
