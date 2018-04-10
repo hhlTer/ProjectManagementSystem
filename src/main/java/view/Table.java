@@ -20,9 +20,9 @@ public class Table {
 //        final int[] LENGTH_COL = new int[COUNT_COLUMN];
         final int[] LENGTH_NNN = new int[COUNT_COLUMN];
 
-//        for (int i = 0; i < COUNT_COLUMN; i++) {
-//            LENGTH_COL[i] = LENGTH_NNN[i] = (nameColumn[i].length()+2);
-//        }
+        for (int i = 0; i < COUNT_COLUMN; i++) {
+            LENGTH_NNN[i] = (nameColumn[i].length()+2);
+        }
 
 
         for (String[] temp : arrayVolumes) {

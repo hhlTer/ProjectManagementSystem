@@ -1,28 +1,24 @@
 package view.DialogMakerInterface;
 
+import controler.commands.AdvanceSQLMaker;
 import controler.commands.AdvancedSQL;
 import controler.commands.ProjectSQLMaker;
 import controler.commands.SQLMaker;
 import controler.main.JDBCStorage;
-import model.Developer;
 import model.Project;
 import view.DialogImplementation.CaseDialog;
 import view.DialogImplementation.ProjectDialog;
 import view.DialogService;
 import view.MainJDBC;
-import view.Table;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 public class AdvancedDialog {
 
     private JDBCStorage storage = MainJDBC.storage;
-        private AdvancedSQL advancedSQL = new ProjectSQLMaker(storage);
+        private AdvancedSQL advancedSQL = new AdvanceSQLMaker(storage);
         private CaseDialog dialog = new ProjectDialog();
         private SQLMaker<Project> projectSQLMaker = new ProjectSQLMaker(storage);
         private Project project;
@@ -33,14 +29,18 @@ public class AdvancedDialog {
 
             System.out.println("Choose action:");
             System.out.println(" 1 - salary all developers of project");
-            System.out.println(" 2 - List of all developers of project");
+            System.out.println(" 2 - list of all developers of project");
 
 
             char ans = DialogService.getAnswer("120");
             switch (ans){
                 case '1':
                     caseProject();
-                    advancedSQL.getSalary(project);
+                    advancedSQL.showDevelopersCost(project);
+                    break;
+                case '2':
+                    caseProject();
+                    advancedSQL.showDevelopersJobs(project);
                     break;
                 case '0':
                     flag = false;

@@ -67,6 +67,13 @@ public class JDBCStorage {
                         "WHERE id_project = ?");
     }
 
+    public PreparedStatement getListDevelopersOfProject()throws SQLException{
+        return connection.prepareStatement
+                ("SELECT developers.id, developers.first_name FROM developer_project_mtm\n" +
+                "LEFT JOIN developers ON developer_project_mtm.id_developer = developers.id\n" +
+                "WHERE id_project = ?;");
+    }
+
     //main Map with statements
     private Map<TypeTable, Map<TypeCRUD, PreparedStatement>> prepareStatementsMap;
     public Map<TypeTable, Map<TypeCRUD, PreparedStatement>> getPrepareStatementsMap() {
