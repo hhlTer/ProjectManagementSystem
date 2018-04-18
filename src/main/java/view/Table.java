@@ -1,7 +1,12 @@
 package view;
 
+import model.Developer;
+import model.GenerallyTable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Table {
     public static void printAsTable(String[] nameColumn, ArrayList<String[]> arrayVolumes){
@@ -89,6 +94,19 @@ public class Table {
         printAsTable(namesCol, temp);
     }
 
+    public static void printAsTable(ArrayList<Developer> developers){
+        ArrayList<String[]> strings = new ArrayList<>(developers.size());
+        strings = developers.stream()
+                .map(Developer::getAll)
+                .collect(Collectors.toCollection(ArrayList::new));
+        printAsTable(Developer.getParam(), strings);
+    }
+
+    public static void printAsTable(GenerallyTable gt){
+        ArrayList<String[]> strings = new ArrayList<>();
+        strings.add(gt.getAll());
+        printAsTable(gt.getPrm(), strings);
+    }
     public static void printTextFormat(String[] namesCol, String[] data){
         for (int i = 0; i < namesCol.length; i++) {
             System.out.println(namesCol[i] + " - "+ data[i]);
