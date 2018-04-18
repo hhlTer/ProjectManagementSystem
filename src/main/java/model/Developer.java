@@ -1,12 +1,28 @@
 package model;
 
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 
-public class Developer {
+@Table(name = "developers")
+@Entity
+public class Developer implements GenerallyTable{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+
+    @Column(name = "first_name")
     private String name;
+
+    @Column(name = "age")
     private int age;
+
+    @Column(name = "sex")
     private boolean sex;
+
+    @Column(name = "salary")
     private BigDecimal salary;
 
     public void setId(long id) {
@@ -59,6 +75,15 @@ public class Developer {
     }
 
     public static String[] getParam() {
+        return new String[]{
+                "id",
+                "first_name",
+                "age",
+                "sex",
+                "salary"
+        };
+    }
+    public String[] getPrm() {
         return new String[]{
                 "id",
                 "first_name",

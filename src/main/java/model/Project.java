@@ -1,11 +1,24 @@
 package model;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Table(name = "projects")
+@Entity
 public class Project {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+
+    @Column(name = "project_name")
     private String project_name;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "cost")
     private BigDecimal cost;
 
     public void setId(long id) {
