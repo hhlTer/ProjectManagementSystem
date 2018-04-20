@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 @Table(name = "projects")
 @Entity
-public class Project {
+public class Project implements GenerallyTable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,6 +67,16 @@ public class Project {
             project_name,
             description,
             String.valueOf(cost)
+        };
+    }
+
+    @Override
+    public String[] getPrm() {
+        return new String[]{
+                "id",
+                "project_name",
+                "description",
+                "cost"
         };
     }
 }

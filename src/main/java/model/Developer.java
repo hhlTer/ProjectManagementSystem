@@ -26,7 +26,7 @@ public class Developer implements GenerallyTable{
     private BigDecimal salary;
 
     public void setId(long id) {
-        this.id = id;
+        this.id = (int)id;
     }
     public void setName(String name) {
         this.name = name;
