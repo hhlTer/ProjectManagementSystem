@@ -54,4 +54,9 @@ public class Company implements GenerallyTable{
                 "adress"
         };
     }
+
+    @Override
+    public String getTableName() {
+        return "companies";
+    }
 }

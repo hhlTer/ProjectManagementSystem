@@ -16,85 +16,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public class DeveloperDialog implements CaseDialog {
-    private Developer developer;
-    private ArrayList<Developer> developers;
-
-    private static HiberInterface<Developer> hiberSQLMaker = new DoItHibernate<>();
-
+public class DeveloperDialog extends GeneralDialog implements CaseDialog {
     @Override
     public void createDialog() {
-        developer = new Developer();
-        fillDeveloper(developer);
-        try {
-            hiberSQLMaker.insertIntoTable(developer);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        createDialog(new Developer());
     }
 
     @Override
     public void readDialog() {
-        while (true) {
-            long id = DialogService.getLongId();
-            try {
-                developer = hiberSQLMaker.getFromTableById(Developer.class, id);
-                Table.printAsTable(Project.getParam(), developer.getAll());
-                break;
-            } catch (NoSuchElementException e) {
-                System.out.println("Project not found in table");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        readDialog(Developer.class);
     }
 
     @Override
-    public void listDialog() {
-        try {
-            developers = hiberSQLMaker.getAllDataTable(Project.class);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        Table.printAsTable(developers);
-    }
+    public void listDialog() { super.listDialog(Developer.class);}
 
     @Override
     public void updateDialog() {
-        readDialog();
-        fillDeveloper(developer);
-        try {
-            hiberSQLMaker.updateInTable(developer);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        updateDialog(Developer.class);
     }
 
     @Override
     public void deleteDialog() {
-        readDialog();
-        System.out.println("Delete developer?\n[y]es/[n]o?");
-        char c = DialogService.getAnswer("yn");
-        if (c == 'y') {
-            try {
-                hiberSQLMaker.deleteCortege(developer);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        deleteDialog(Developer.class);
     }
 
     @Override
     public void eraseDialog() {
-        System.out.println("Erase table?\n[Y]es/[N]o?");
-        char answer = DialogService.getAnswer("yn");
-        if (answer == 'y'){
-            try {
-                hiberSQLMaker.eraseTable("project");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        eraseDialog(Developer.class);
     }
 
     static void fillDeveloper(Developer developer){

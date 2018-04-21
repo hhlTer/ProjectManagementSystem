@@ -93,6 +93,11 @@ public class Developer implements GenerallyTable{
         };
     }
 
+    @Override
+    public String getTableName() {
+        return "developers";
+    }
+
     public final static class Skill {
         private long id;
         private String skill;

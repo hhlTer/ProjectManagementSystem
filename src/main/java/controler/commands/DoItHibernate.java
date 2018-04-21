@@ -62,10 +62,10 @@ public class DoItHibernate<T extends GenerallyTable> implements HiberInterface<T
     }
 
     @Override
-    public void eraseTable(String tableName) throws SQLException {
+    public void eraseTable(Class<? extends GenerallyTable> clazz) throws SQLException {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        String q = "delete from " + tableName;
+        String q = "delete from " + clazz.getName().toLowerCase();
         Query query = session.createQuery(q);
         query.executeUpdate();
         transaction.commit();
@@ -91,11 +91,5 @@ public class DoItHibernate<T extends GenerallyTable> implements HiberInterface<T
         Query<T> query = session.createQuery(criteriaQuery);
         ArrayList<T> at = (ArrayList<T>) query.getResultList();
         return at;
-//        T t = null;
-//        Session session = sessionFactory.openSession();
-//        GenerallyTable table = session.get(clazz, id);
-//        t = (T) table;
-//        session.close();
-//        return t;
     }
 }

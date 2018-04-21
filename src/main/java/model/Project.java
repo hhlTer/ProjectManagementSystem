@@ -79,4 +79,9 @@ public class Project implements GenerallyTable{
                 "cost"
         };
     }
+
+    @Override
+    public String getTableName() {
+        return "projects";
+    }
 }

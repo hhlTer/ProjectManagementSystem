@@ -24,10 +24,6 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class ProjectDialog extends GeneralDialog implements CaseDialog{
-    private Project project;
-    private ArrayList<Project> projects;
-
-    private static HiberInterface<Project> hiberSQLMaker = new DoItHibernate<>();
 
     @Override
     public void createDialog() {
@@ -36,66 +32,25 @@ public class ProjectDialog extends GeneralDialog implements CaseDialog{
 
     @Override
     public void readDialog() {
-        while (true) {
-            long id = DialogService.getLongId();
-            try {
-                project = hiberSQLMaker.getFromTableById(Project.class, id);
-                Table.printAsTable(Project.getParam(), project.getAll());
-                break;
-            } catch (NoSuchElementException e) {
-                System.out.println("Project not found in table");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        readDialog(Project.class);
     }
 
     @Override
-    public void listDialog() {
-        try {
-            projects = hiberSQLMaker.getAllDataTable(Project.class);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        Table.printAsTable(projects);
-    }
+    public void listDialog() { super.listDialog(Project.class);}
 
     @Override
     public void updateDialog() {
-        readDialog();
-        fillProject(project);
-        try {
-            hiberSQLMaker.updateInTable(project);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        updateDialog(Project.class);
     }
 
     @Override
     public void deleteDialog() {
-        readDialog();
-        System.out.println("Delete project?\n[y]es/[n]o?");
-        char c = DialogService.getAnswer("yn");
-        if (c == 'y') {
-            try {
-                hiberSQLMaker.deleteCortege(project);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        deleteDialog(Project.class);
     }
 
     @Override
     public void eraseDialog() {
-        System.out.println("Erase table?\n[Y]es/[N]o?");
-        char answer = DialogService.getAnswer("yn");
-        if (answer == 'y'){
-            try {
-                hiberSQLMaker.eraseTable("project");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        eraseDialog(Project.class);
     }
 
     static void fillProject(Project p){

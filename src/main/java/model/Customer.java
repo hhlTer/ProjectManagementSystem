@@ -53,4 +53,9 @@ public class Customer implements GenerallyTable{
                 "adress"
         };
     }
+
+    @Override
+    public String getTableName() {
+        return "customers";
+    }
 }
