@@ -27,6 +27,8 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping class="model.Developer"/>
+        <mapping class="model.Customer"/>
+        <mapping class="model.Companies"/>
         <mapping class="model.Project"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,8 +1,20 @@
 package model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "companies")
 public class Company implements GenerallyTable{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+
+    @Column(name = "company_name")
     private String company_name;
+
+    @Column(name = "adress")
     private String adress;
 
     public void setId(long id) {

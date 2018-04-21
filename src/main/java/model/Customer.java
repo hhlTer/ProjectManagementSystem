@@ -1,9 +1,22 @@
 package model;
 
+
+import javax.persistence.*;
+
+@Table(name = "customers")
+@Entity
 public class Customer implements GenerallyTable{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+
+    @Column(name = "customer_name")
     private String customer_name;
-    private String adress;
+
+    @Column(name = "adress")
+    private String address;
 
     public void setId(long id) {
         this.id = id;
@@ -11,8 +24,8 @@ public class Customer implements GenerallyTable{
     public void setCustomer_name(String customer_name) {
         this.customer_name = customer_name;
     }
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String adress) {
+        this.address = adress;
     }
     public long getId() {
         return id;
@@ -20,13 +33,13 @@ public class Customer implements GenerallyTable{
     public String getCustomer_name() {
         return customer_name;
     }
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
     @Override
     public String toString() {
-        return String.format("Customer :%s\naddress: %s\n", customer_name, adress);
+        return String.format("Customer :%s\naddress: %s\n", customer_name, address);
     }
 
     public static String[] getParam(){
@@ -41,7 +54,7 @@ public class Customer implements GenerallyTable{
         return new String[]{
                 String.valueOf(id),
                 customer_name,
-                adress
+                address
         };
     }
 

@@ -1,17 +1,9 @@
 package view.DialogImplementation;
 
-import controler.commands.CustomerSQLMaker;
-import controler.commands.SQLMaker;
-import model.Customer;
 import model.Customer;
 import view.DialogService;
-import view.MainJDBC;
-import view.Table;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 public class CustomerDialog extends GeneralDialog implements CaseDialog {
 
@@ -49,6 +41,6 @@ public class CustomerDialog extends GeneralDialog implements CaseDialog {
         );
 
         c.setCustomer_name(param[0]);
-        c.setAdress(param[1]);
+        c.setAddress(param[1]);
     }
 }
