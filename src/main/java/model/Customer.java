@@ -1,6 +1,6 @@
 package model;
 
-public class Customer {
+public class Customer implements GenerallyTable{
     private long id;
     private String customer_name;
     private String adress;
@@ -42,6 +42,15 @@ public class Customer {
                 String.valueOf(id),
                 customer_name,
                 adress
+        };
+    }
+
+    @Override
+    public String[] getPrm() {
+        return new String[]{
+                "id",
+                "customer_name",
+                "adress"
         };
     }
 }

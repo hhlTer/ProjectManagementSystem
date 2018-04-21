@@ -1,8 +1,11 @@
 package view.DialogImplementation;
 
 import controler.commands.DeveloperSQLMaker;
+import controler.commands.DoItHibernate;
+import controler.commands.HiberInterface;
 import controler.commands.SQLMaker;
 import model.Developer;
+import model.Project;
 import view.DialogService;
 import view.MainJDBC;
 import view.Table;
@@ -14,16 +17,17 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class DeveloperDialog implements CaseDialog {
-    private SQLMaker<Developer> developerSQLMaker = new DeveloperSQLMaker(MainJDBC.storage);
     private Developer developer;
     private ArrayList<Developer> developers;
+
+    private static HiberInterface<Developer> hiberSQLMaker = new DoItHibernate<>();
 
     @Override
     public void createDialog() {
         developer = new Developer();
         fillDeveloper(developer);
         try {
-            developerSQLMaker.insertIntoTable(developer);
+            hiberSQLMaker.insertIntoTable(developer);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -34,44 +38,33 @@ public class DeveloperDialog implements CaseDialog {
         while (true) {
             long id = DialogService.getLongId();
             try {
-                developer = (Developer) developerSQLMaker.selectFromTableById(id);
-                Table.printAsTable(Developer.getParam(), developer.getAll());
+                developer = hiberSQLMaker.getFromTableById(Developer.class, id);
+                Table.printAsTable(Project.getParam(), developer.getAll());
                 break;
-                //service.printTable();
             } catch (NoSuchElementException e) {
-                System.out.println("Developer not found in table");
+                System.out.println("Project not found in table");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-// Add developer to project?
-//        service.addToMtm(developer, new Project(), new ProjectDialog(), developersCRUD);
-// Show project for Developer?
-
     }
 
     @Override
     public void listDialog() {
         try {
-            developers = developerSQLMaker.getAllDataTable();
+            developers = hiberSQLMaker.getAllDataTable(Project.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        ArrayList<String[]> tempArray = new ArrayList<>(developers.size());
-        for (Developer d:
-                developers) {
-            tempArray.add(d.getAll());
-        }
-        Table.printAsTable(Developer.getParam(), tempArray);
+        Table.printAsTable(developers);
     }
 
     @Override
     public void updateDialog() {
         readDialog();
         fillDeveloper(developer);
-
         try {
-            developerSQLMaker.updateInTable(developer);
+            hiberSQLMaker.updateInTable(developer);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -84,7 +77,7 @@ public class DeveloperDialog implements CaseDialog {
         char c = DialogService.getAnswer("yn");
         if (c == 'y') {
             try {
-                developerSQLMaker.deleteCortege(developer.getId());
+                hiberSQLMaker.deleteCortege(developer);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -97,14 +90,14 @@ public class DeveloperDialog implements CaseDialog {
         char answer = DialogService.getAnswer("yn");
         if (answer == 'y'){
             try {
-                developerSQLMaker.eraseTable();
+                hiberSQLMaker.eraseTable("project");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void fillDeveloper(Developer developer){
+    static void fillDeveloper(Developer developer){
         String[] param = DialogService.getData(
                 Arrays.copyOfRange(Developer.getParam(), 1, Developer.getParam().length)
         );
@@ -118,4 +111,5 @@ public class DeveloperDialog implements CaseDialog {
         developer.setSex(sex);
         developer.setSalary(salary);
     }
+
 }

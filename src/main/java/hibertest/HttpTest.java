@@ -44,7 +44,7 @@ public class HttpTest {
         ArrayList<Developer> developers = new ArrayList<>();
         DoItHibernate<Developer> hib = new DoItHibernate<>();
         developers = hib.getAllDataTable(Developer.class);
-        Table.printAsTable(developers);
+        Table.printAsTable((GenerallyTable) developers);
 
         System.exit(0);
     }

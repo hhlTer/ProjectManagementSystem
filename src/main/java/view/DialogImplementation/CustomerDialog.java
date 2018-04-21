@@ -99,7 +99,7 @@ public class CustomerDialog implements CaseDialog {
         }
     }
 
-    private void fillCustomer(Customer c){
+    static void fillCustomer(Customer c){
         String[] param = DialogService.getData(
                 Arrays.copyOfRange(Customer.getParam(), 1, Customer.getParam().length)
         );

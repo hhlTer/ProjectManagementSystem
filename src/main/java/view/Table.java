@@ -94,12 +94,12 @@ public class Table {
         printAsTable(namesCol, temp);
     }
 
-    public static void printAsTable(ArrayList<Developer> developers){
-        ArrayList<String[]> strings = new ArrayList<>(developers.size());
-        strings = developers.stream()
-                .map(Developer::getAll)
+    public static void printAsTable(ArrayList<? extends GenerallyTable> gt){
+        ArrayList<String[]> strings = new ArrayList<>(gt.size());
+        strings = gt.stream()
+                .map(GenerallyTable::getAll)
                 .collect(Collectors.toCollection(ArrayList::new));
-        printAsTable(Developer.getParam(), strings);
+        printAsTable(gt.get(0).getPrm(), strings);
     }
 
     public static void printAsTable(GenerallyTable gt){

@@ -31,27 +31,41 @@ public class MainJDBC {
             DialogMaker dialog = () -> null;
 
             char c = DialogService.getAnswer("dpecoa");
-            switch (c) {
-                case 'd':
-                    dialog = dialogMaker(TypeTable.developers);
-                    break;
-                case 'p':
-                    dialog = dialogMaker(TypeTable.projects);
-                    break;
-                case 'c':
-                    dialog = dialogMaker(TypeTable.customers);
-                    break;
-                case 'o':
-                    dialog = dialogMaker(TypeTable.companies);
-                    break;
-                case 'a':
-                    new AdvancedDialog().getData();
-                    continue;
-                case 'e':
-                    System.err.println("Bye!");
-                    System.exit(0);
-                    break;
+            TypeTable typeTable;
+            typeTable = c == 'd' ? TypeTable.developers :
+                        c == 'p' ? TypeTable.projects :
+                        c == 'c' ? TypeTable.customers :
+                        c == 'o' ? TypeTable.companies :
+                        null;
+            if (c == 'a'){
+                new AdvancedDialog().getData();
+            } else if (c == 'e'){
+                System.err.println("Bye!");
+                System.exit(0);
             }
+            dialog = dialogMaker(typeTable);
+//
+//            switch (c) {
+//                case 'd':
+//                    typeTable = TypeTable.developers;
+//                    break;
+//                case 'p':
+//                    typeTable = TypeTable.projects;
+//                    break;
+//                case 'c':
+//                    typeTable = TypeTable.customers;
+//                    break;
+//                case 'o':
+//                    dialog = dialogMaker(TypeTable.companies);
+//                    break;
+//                case 'a':
+//                    new AdvancedDialog().getData();
+//                    continue;
+//                case 'e':
+//                    System.err.println("Bye!");
+//                    System.exit(0);
+//                    break;
+//            }
 
             //Command choise dialog
             do {
