@@ -2,6 +2,7 @@ package homeworkHibernate.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Table(name = "projects")
 @Entity
@@ -21,6 +22,12 @@ public class Project implements GenerallyTable{
     @Column(name = "cost")
     private BigDecimal cost;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
+    private Set<Developer> developers;
+
+    public void setDevelopers(Set<Developer> developers) {
+        this.developers = developers;
+    }
     public void setId(long id) {
         this.id = id;
     }
@@ -34,6 +41,9 @@ public class Project implements GenerallyTable{
         this.cost = cost;
     }
 
+    public Set<Developer> getDevelopers() {
+        return developers;
+    }
     public long getId() {
         return id;
     }

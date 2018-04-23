@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 
 
 class GeneralDialog {
-    private static HiberInterface<GenerallyTable> hiberSQLMaker = new DoItHibernate<>();
+    public static HiberInterface<GenerallyTable> hiberSQLMaker = new DoItHibernate<>();
 
     private ArrayList<GenerallyTable> generallyTables;
     private GenerallyTable generallyTable;

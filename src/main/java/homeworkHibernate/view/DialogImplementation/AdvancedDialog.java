@@ -1,16 +1,20 @@
-package homeworkHibernate.view.DialogMakerInterface;
+package homeworkHibernate.view.DialogImplementation;
 
+import homeworkHibernate.controler.SessionGenerate;
 import homeworkHibernate.controler.commands.AdvanceSQLMaker;
 import homeworkHibernate.controler.commands.AdvancedSQL;
 import homeworkHibernate.controler.commands.ProjectSQLMaker;
 import homeworkHibernate.controler.commands.SQLMaker;
 import homeworkHibernate.controler.main.JDBCStorage;
+import homeworkHibernate.model.GenerallyTable;
 import homeworkHibernate.model.Project;
+import homeworkHibernate.model.mapping.ProjectCost;
 import homeworkHibernate.view.DialogImplementation.CaseDialog;
 import homeworkHibernate.view.DialogImplementation.ProjectDialog;
 import homeworkHibernate.view.DialogService;
 import homeworkHibernate.view.MainJDBC;
 import homeworkHibernate.view.Table;
+import org.hibernate.SessionFactory;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,7 +23,9 @@ import java.util.NoSuchElementException;
 public class AdvancedDialog {
 
     private JDBCStorage storage = MainJDBC.storage;
+    private SessionFactory sessionFactory = SessionGenerate.getInstance().getSessionFactory();
         private AdvancedSQL advancedSQL = new AdvanceSQLMaker(storage);
+        private AdvancedSQL advancedHQL = new AdvanceSQLMaker(sessionFactory.openSession());
         private CaseDialog dialog = new ProjectDialog();
         private SQLMaker<Project> projectSQLMaker = new ProjectSQLMaker(storage);
         private Project project;
@@ -27,7 +33,6 @@ public class AdvancedDialog {
     public void getData(){
         boolean flag = true;
         do {
-
             System.out.println("Choose action:");
             System.out.println(" 1 - salary all developers of project");
             System.out.println(" 2 - list of all developers of project");
@@ -41,7 +46,12 @@ public class AdvancedDialog {
             switch (ans){
                 case '1':
                     caseProject();
-                    advancedSQL.showDevelopersCost(project);
+                    ProjectCost projectCost = advancedSQL.getDevelopersCost(project);
+                    Table.printAsTable(new String[]{"project name",
+                                                    "cost"},
+                                       new String[]{projectCost.getProjectName(),
+                                                    String.valueOf(projectCost.getCost())
+                    });
                     break;
                 case '2':
                     caseProject();
@@ -68,18 +78,19 @@ public class AdvancedDialog {
 
     private void caseProject(){
         try {
-            ArrayList<Project> projects = projectSQLMaker.getAllDataTable();
-            ArrayList<String[]> strings = new ArrayList<>();
-            for (Project p:
-                 projects) {
-                strings.add(p.getAll());
-            }
+//            ArrayList<Project> projects = projectSQLMaker.getAllDataTable();
+//            ArrayList<String[]> strings = new ArrayList<>();
+//            for (Project p:
+//                 projects) {
+//                strings.add(p.getAll());
+//            }
 
-            Table.printAsTable(Project.getParam(), strings);
+            ArrayList<GenerallyTable> gts = GeneralDialog.hiberSQLMaker.getAllDataTable(Project.class);
+            Table.printAsTable(gts);
             for (;;) {
                     System.out.println("Choose a project: ");
                     long id = DialogService.getLongId();
-                    project = projectSQLMaker.selectFromTableById(id);
+                    project = (Project) GeneralDialog.hiberSQLMaker.getFromTableById(Project.class, id);
                     break;
                  }
             } catch (NoSuchElementException e) {

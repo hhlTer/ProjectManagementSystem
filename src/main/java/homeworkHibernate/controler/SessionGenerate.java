@@ -15,8 +15,11 @@ public class SessionGenerate {
                 .configure() // configures settings from hibernate.cfg.xml
                 .build();
         try {
+            System.out.println("create session factory");
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+            System.out.println("done creating session fa");
         } catch (Exception e) {
+            e.printStackTrace();
             StandardServiceRegistryBuilder.destroy(registry);
         }
     }
