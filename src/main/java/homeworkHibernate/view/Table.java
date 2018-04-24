@@ -3,7 +3,11 @@ package homeworkHibernate.view;
 import homeworkHibernate.model.GenerallyTable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Table {
     public static void printAsTable(String[] nameColumn, ArrayList<String[]> arrayVolumes){
@@ -25,7 +29,6 @@ public class Table {
         for (int i = 0; i < COUNT_COLUMN; i++) {
             LENGTH_NNN[i] = (nameColumn[i].length()+2);
         }
-
 
         for (String[] temp : arrayVolumes) {
             for (int j = 0; j < COUNT_COLUMN; j++) {
@@ -82,15 +85,35 @@ public class Table {
         return l.toString();
     }
 
+    //one line from to arrays
     public static void printAsTable(String[] namesCol, String[] data){
-//sets lohg of table
-        //
-
         ArrayList<String[]> temp = new ArrayList<>();
         temp.add(data);
         printAsTable(namesCol, temp);
     }
 
+    //one line print from one array
+    public static void printAsTable(String... data){
+        if (data.length%2 != 0){
+            data = Arrays.copyOf(data, data.length + 1);
+            data[data.length - 1] = "";
+        }
+        ArrayList<String[]> temp = new ArrayList<>();
+        final int len = data.length/2;
+        String[] namesCol = new String[len];
+        String[] param = new String[len];
+        for (int i = 0; i < data.length; i++) {
+            if (i < len) {
+                namesCol[i] = data[i];
+            } else {
+                param[i-len] = data[i];
+            }
+        }
+        temp.add(param);
+        printAsTable(namesCol, temp);
+    }
+
+    //GeneralTable list print
     public static void printAsTable(ArrayList<? extends GenerallyTable> gt){
         ArrayList<String[]> strings;
         strings = gt.stream()
@@ -99,6 +122,7 @@ public class Table {
         printAsTable(gt.get(0).getPrm(), strings);
     }
 
+    //General table one line print
     public static void printAsTable(GenerallyTable gt){
         ArrayList<String[]> strings = new ArrayList<>();
         strings.add(gt.getAll());

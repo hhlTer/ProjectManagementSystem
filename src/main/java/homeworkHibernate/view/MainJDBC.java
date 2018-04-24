@@ -40,6 +40,7 @@ public class MainJDBC {
                         null;
             if (c == 'a'){
                 new AdvancedDialog().getData();
+                continue;
             } else if (c == 'e'){
                 System.err.println("Bye!");
                 System.exit(0);
