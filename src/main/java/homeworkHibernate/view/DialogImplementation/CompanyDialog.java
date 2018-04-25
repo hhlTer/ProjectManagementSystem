@@ -1,7 +1,7 @@
 package homeworkHibernate.view.DialogImplementation;
 
 import homeworkHibernate.model.Company;
-import homeworkHibernate.view.DialogService;
+import homeworkHibernate.view.dialogServise.DialogService;
 
 import java.util.Arrays;
 

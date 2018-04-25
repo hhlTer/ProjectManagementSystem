@@ -2,36 +2,30 @@ package homeworkHibernate.view.DialogImplementation;
 
 import homeworkHibernate.controler.SessionGenerate;
 import homeworkHibernate.controler.commands.AdvanceHQLMaker;
-import homeworkHibernate.controler.commands.AdvancedSQL;
+import homeworkHibernate.controler.commands.AdvancedHQL;
 import homeworkHibernate.controler.commands.ProjectSQLMaker;
 import homeworkHibernate.controler.commands.SQLMaker;
 import homeworkHibernate.controler.main.JDBCStorage;
 import homeworkHibernate.model.Developer;
 import homeworkHibernate.model.GenerallyTable;
 import homeworkHibernate.model.Project;
-import homeworkHibernate.model.mapping.results.DevelopersOfProject;
-import homeworkHibernate.model.mapping.results.ProjectCost;
-import homeworkHibernate.view.DialogService;
+import homeworkHibernate.model.results.ProjectCost;
 import homeworkHibernate.view.MainJDBC;
-import homeworkHibernate.view.Table;
+import homeworkHibernate.view.dialogServise.DialogService;
+import homeworkHibernate.view.dialogServise.Table;
 import org.hibernate.SessionFactory;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.function.IntFunction;
-import java.util.function.IntUnaryOperator;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class AdvancedDialog {
 
     private JDBCStorage storage = MainJDBC.storage;
     private SessionFactory sessionFactory = SessionGenerate.getInstance().getSessionFactory();
-        private AdvancedSQL advancedSQL = new AdvanceHQLMaker(storage);
-        private AdvancedSQL advancedHQL = new AdvanceHQLMaker(sessionFactory.openSession());
+        private AdvancedHQL advancedSQL = new AdvanceHQLMaker(storage);
+        private AdvancedHQL advancedHQL = new AdvanceHQLMaker(sessionFactory.openSession());
         private CaseDialog dialog = new ProjectDialog();
         private SQLMaker<Project> projectSQLMaker = new ProjectSQLMaker(storage);
         private Project project;
@@ -49,7 +43,7 @@ public class AdvancedDialog {
 
             String[] column;
             ArrayList<String[]> param = new ArrayList<>();
-
+            Set<Developer> developers;
             char ans = DialogService.getAnswer("123450");
             switch (ans){
                 case '1':
@@ -76,7 +70,7 @@ public class AdvancedDialog {
                     break;
                 case '3':
                     String skill = caseSkill();
-                    Set<Developer> developers = advancedSQL.showDevelopersSkill(skill);
+                    developers = advancedSQL.showDevelopersSkill(skill);
                     column = new String[]{"Skill", "Developer"};
                     for (Developer d:
                             developers) {
@@ -86,11 +80,18 @@ public class AdvancedDialog {
                     break;
                 case '4':
                     String grade = caseGrade();
-                    advancedSQL.showDevelopersGrade(grade, "grade");
+                    developers = advancedSQL.showDevelopersGrade(grade);
+                    column = new String[]{"Skill", "Developer"};
+                    for (Developer d:
+                            developers) {
+                        param.add(new String[]{grade, d.getName()});
+                    }
+                    Table.printAsTable(column, param);
                     break;
                 case '5':
                     caseProject();
-                    advancedSQL.showCountOfDeveloperByProject(project);
+                    long result = advancedSQL.showCountOfDeveloperByProject(project);
+                    Table.printAsTable("Count of developer: ", String.valueOf(result));
                     break;
                 case '0':
                     flag = false;

@@ -1,4 +1,4 @@
-package homeworkHibernate.model.mapping.results;
+package homeworkHibernate.model.results;
 
 import homeworkHibernate.model.Developer;
 import homeworkHibernate.model.Project;

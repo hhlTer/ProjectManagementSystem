@@ -1,4 +1,4 @@
-package homeworkHibernate.view;
+package homeworkHibernate.view.dialogServise;
 
 import java.math.BigDecimal;
 import java.util.Scanner;

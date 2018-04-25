@@ -1,4 +1,4 @@
-package homeworkHibernate.model.mapping.results;
+package homeworkHibernate.model.results;
 
 import java.math.BigDecimal;
 

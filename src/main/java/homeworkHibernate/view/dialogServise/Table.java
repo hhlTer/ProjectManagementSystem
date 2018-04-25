@@ -1,4 +1,4 @@
-package homeworkHibernate.view;
+package homeworkHibernate.view.dialogServise;
 
 import homeworkHibernate.model.GenerallyTable;
 

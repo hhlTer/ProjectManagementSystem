@@ -3,6 +3,7 @@ package homeworkHibernate.view;
 import homeworkHibernate.controler.main.JDBCStorage;
 import homeworkHibernate.enumerated.TypeTable;
 import homeworkHibernate.view.DialogImplementation.AdvancedDialog;
+import homeworkHibernate.view.dialogServise.DialogService;
 import homeworkHibernate.view.DialogMakerInterface.*;
 
 import java.sql.SQLException;

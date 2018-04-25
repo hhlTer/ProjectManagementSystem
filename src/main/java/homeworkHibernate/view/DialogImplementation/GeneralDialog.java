@@ -3,8 +3,8 @@ package homeworkHibernate.view.DialogImplementation;
 import homeworkHibernate.controler.commands.DoItHibernate;
 import homeworkHibernate.controler.commands.HiberInterface;
 import homeworkHibernate.model.*;
-import homeworkHibernate.view.DialogService;
-import homeworkHibernate.view.Table;
+import homeworkHibernate.view.dialogServise.DialogService;
+import homeworkHibernate.view.dialogServise.Table;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
