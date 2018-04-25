@@ -2,10 +2,7 @@ package homeworkHibernate.controler.main;
 
 import homeworkHibernate.enumerated.TypeCRUD;
 import homeworkHibernate.enumerated.TypeTable;
-import homeworkHibernate.model.Company;
-import homeworkHibernate.model.Customer;
-import homeworkHibernate.model.Developer;
-import homeworkHibernate.model.Project;
+import homeworkHibernate.model.*;
 
 import java.sql.*;
 import java.util.Arrays;
@@ -333,7 +330,7 @@ public class JDBCStorage {
             case customers:
                 return Customer.getParam();
             case skills:
-                return Developer.Skill.getParam();
+                return Skill.getParam();
             default:
                 return null;
         }

@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.function.IntFunction;
 import java.util.function.IntUnaryOperator;
 import java.util.stream.Collectors;
@@ -46,6 +47,8 @@ public class AdvancedDialog {
             System.out.println(" 5 - list count of all developers in project");
             System.out.println(" 0 - Exit");
 
+            String[] column;
+            ArrayList<String[]> param = new ArrayList<>();
 
             char ans = DialogService.getAnswer("123450");
             switch (ans){
@@ -58,25 +61,28 @@ public class AdvancedDialog {
                 case '2':
                     caseProject();
                     Project developersOfProject = advancedSQL.fillDeveloperSet(project);
-                    String[] column = new String[]{"Project" , "Developer"};
+                    column = new String[]{"Project" , "Developer"};
 
 //                    ArrayList<String[]> param = developersOfProject.getDevelopers().stream()
 //                        .map(s -> new String[]{developersOfProject.getProject_name(), s.getName()})
 //                            .collect(Collectors.toCollection(ArrayList::new));
 
-
-                    ArrayList<String[]> param = new ArrayList<>();
+                    param = new ArrayList<>();
                     for (Developer d:
                          developersOfProject.getDevelopers()) {
                         param.add(new String[]{project.getProject_name(), d.getName()});
                     }
-
-
                     Table.printAsTable(column, param);
                     break;
                 case '3':
                     String skill = caseSkill();
-                    advancedSQL.showDevelopersSkill(skill, "skill");
+                    Set<Developer> developers = advancedSQL.showDevelopersSkill(skill);
+                    column = new String[]{"Skill", "Developer"};
+                    for (Developer d:
+                            developers) {
+                        param.add(new String[]{skill, d.getName()});
+                    }
+                    Table.printAsTable(column, param);
                     break;
                 case '4':
                     String grade = caseGrade();

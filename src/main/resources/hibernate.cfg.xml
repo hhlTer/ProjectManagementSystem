@@ -12,7 +12,7 @@
         <property name="hibernate.connection.pool_size">1</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
 
         <!--Cashing-->
         <property name="hibernate.cache.region.factory_class">org.hibernate.cache.jcache.JCacheRegionFactory</property>
@@ -26,9 +26,17 @@
         <!--automatic creating and reloading DB structure-->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <mapping class="model.Developer"/>
-        <mapping class="model.Customer"/>
-        <mapping class="model.Companies"/>
-        <mapping class="model.Project"/>
+        <mapping class="homeworkHibernate.model.Developer"/>
+        <mapping class="homeworkHibernate.model.Customer"/>
+        <mapping class="homeworkHibernate.model.Company"/>
+        <mapping class="homeworkHibernate.model.Project"/>
+        <mapping class="homeworkHibernate.model.mapping.ProjectDeveloper"/>
+        <mapping class="tmp.Entity.Student"/>
+        <mapping class="tmp.Entity.Exam"/>
+        <mapping class="tmp.Entity.Subject"/>
+        <!--&lt;!&ndash;-->
+        <mapping class="homeworkHibernate.model.Skill"/>
+        <mapping class="homeworkHibernate.model.mapping.DeveloperSkill"/>
+
     </session-factory>
 </hibernate-configuration>

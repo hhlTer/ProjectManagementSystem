@@ -26,12 +26,18 @@ public class Developer implements GenerallyTable{
     @Column(name = "salary")
     private BigDecimal salary;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "developer")
-//    private Set<Project> projects;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
+    private Set<Project> projects;
 
-//    public void setProjects(Set<Project> projects) {
-//        this.projects = projects;
-//    }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
+    private Set<Skill> skills;
+
+    public void setSkills(Set<Skill> skills) {
+        this.skills = skills;
+    }
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }
     public void setId(long id) {
         this.id = (int)id;
     }
@@ -48,9 +54,14 @@ public class Developer implements GenerallyTable{
         this.salary = salary;
     }
 
-//    public Set<Project> getProjects() {
-//        return projects;
-//    }
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public Set<Skill> getSkills() {
+        return skills;
+    }
+
     public long getId() {
         return id;
     }
@@ -108,41 +119,5 @@ public class Developer implements GenerallyTable{
         return "developers";
     }
 
-    public final static class Skill {
-        private long id;
-        private String skill;
-        private String grade;
 
-        public long getId() {
-            return id;
-        }
-        public String getSkill() {
-            return skill;
-        }
-        public String getGrade() {
-            return grade;
-        }
-
-        @Override
-        public String toString() {
-            return String.format("id :%d\nTypeSkill: %s\nGrade: %s\n", id, skill, grade);
-        }
-
-        public static String[] getParam() {
-            return new String[]{
-                    "id",
-                    "skill",
-                    "grade",
-            };
-        }
-
-        public String[] getAll(){
-            return new String[]{
-                String.valueOf(id),
-                skill,
-                grade
-            };
-        }
-
-    }
 }

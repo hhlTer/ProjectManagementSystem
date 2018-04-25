@@ -37,46 +37,35 @@ public class AdvanceHQLMaker extends MainMaker implements AdvancedSQL{
 
     @Override
     public Project fillDeveloperSet(Project project){
-        List<Developer> developers = session.createQuery("from Developer d " +
+        List<Developer> developers = session.createQuery("select d from Developer d " +
                 "left join ProjectDeveloper pd on pd.developer.id = d.id " +
-                "where pd.project.id = " + project.getId())
+                "where pd.project.project_name = 'MainFM'", Developer.class)
+//                .setParameter("pId", project.getId())
                 .getResultList();
 
         Set<Developer> developersSet = developers.stream().collect(Collectors.toCollection(HashSet::new));
         project.setDevelopers(developersSet);
-//        DevelopersOfProject developersOfProject = new DevelopersOfProject(developersSet);
-//        developersOfProject.setProject(project);
         return project;
     }
 
     @Override
-    public void showDevelopersSkill(String skill, String skillColName) {
-        try {
-            PreparedStatement ps = jdbcStorage.getListDeveloperAsSkill(skillColName);
-            ps.setString(1, skill);
-            ResultSet rs = ps.executeQuery();
-            ArrayList<String[]> strings = new ArrayList<>();
-            if (rs.first()){
-                while (rs.next()){
-                    strings.add(new String[]{
-                            rs.getString(1),
-                            rs.getString(2)
-                    });
-                }
-            }
-            String[] column = new String[]{
-                    "Developer name",
-                    "Skill"
-            };
-            Table.printAsTable(column, strings);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public Set<Developer> showDevelopersSkill(String skill) {
+        List<Object> skills = session.createQuery("select s.skills from Skill s", Object.class)
+                .getResultList();
+        List<Developer> developers = session.createQuery("select d from Developer d " +
+                "left join DeveloperSkill ds on ds.developer.id = d.id " +
+//                "left join Skill s on s.id = ds.skill.id " +
+                "where ds.skill.skills like :sk", Developer.class)
+                .setParameter("sk", skill)
+                .getResultList();
+        Set<Developer> developersSet = developers.stream().collect(Collectors.toCollection(HashSet::new));
+        return developersSet;
+//        return null;
     }
 
     @Override
     public void showDevelopersGrade(String grade, String skillColName) {
-        showDevelopersSkill(grade, skillColName);
+        showDevelopersSkill("");
     }
 
     @Override
