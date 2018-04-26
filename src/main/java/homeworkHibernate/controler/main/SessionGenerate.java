@@ -1,4 +1,4 @@
-package homeworkHibernate.controler;
+package homeworkHibernate.controler.main;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

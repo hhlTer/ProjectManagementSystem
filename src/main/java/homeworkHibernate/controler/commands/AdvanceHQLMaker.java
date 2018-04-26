@@ -1,8 +1,7 @@
 package homeworkHibernate.controler.commands;
 
-import homeworkHibernate.controler.main.JDBCStorage;
-import homeworkHibernate.model.Developer;
-import homeworkHibernate.model.Project;
+import homeworkHibernate.model.tables.Developer;
+import homeworkHibernate.model.tables.Project;
 import homeworkHibernate.model.results.ProjectCost;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -12,16 +11,13 @@ import java.util.stream.Collectors;
 
 public class AdvanceHQLMaker extends MainMaker implements AdvancedHQL {
 
-    public AdvanceHQLMaker(JDBCStorage initJdbcStorage) {
-        super(initJdbcStorage);
-    }
     public AdvanceHQLMaker(Session session) {
         super(session);
     }
 
     @Override
     public ProjectCost getDevelopersCost(Project project) {
-        String query = "select new homeworkHibernate.model.mapping.results.ProjectCost" +
+        String query = "select new homeworkHibernate.model.results.ProjectCost" +
                 "(pd.project.project_name, sum (pd.developer.salary)) " +
                 "from ProjectDeveloper pd " +
                 "where pd.project.id =: projectId";

@@ -26,16 +26,13 @@
         <!--automatic creating and reloading DB structure-->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <mapping class="homeworkHibernate.model.Developer"/>
-        <mapping class="homeworkHibernate.model.Customer"/>
-        <mapping class="homeworkHibernate.model.Company"/>
-        <mapping class="homeworkHibernate.model.Project"/>
+        <mapping class="homeworkHibernate.model.tables.Developer"/>
+        <mapping class="homeworkHibernate.model.tables.Customer"/>
+        <mapping class="homeworkHibernate.model.tables.Company"/>
+        <mapping class="homeworkHibernate.model.tables.Project"/>
         <mapping class="homeworkHibernate.model.mapping.ProjectDeveloper"/>
-        <mapping class="tmp.Entity.Student"/>
-        <mapping class="tmp.Entity.Exam"/>
-        <mapping class="tmp.Entity.Subject"/>
         <!--&lt;!&ndash;-->
-        <mapping class="homeworkHibernate.model.Skill"/>
+        <mapping class="homeworkHibernate.model.tables.Skill"/>
         <mapping class="homeworkHibernate.model.mapping.DeveloperSkill"/>
 
     </session-factory>

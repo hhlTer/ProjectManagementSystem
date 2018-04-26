@@ -1,6 +1,5 @@
 package homeworkHibernate.view;
 
-import homeworkHibernate.controler.main.JDBCStorage;
 import homeworkHibernate.enumerated.TypeTable;
 import homeworkHibernate.view.DialogImplementation.AdvancedDialog;
 import homeworkHibernate.view.dialogServise.DialogService;
@@ -10,7 +9,6 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class MainJDBC {
-    public static JDBCStorage storage = new JDBCStorage();
     public static void main(String[] args) throws SQLException {
 //        JDBCStorage storage = new JDBCStorage();
 

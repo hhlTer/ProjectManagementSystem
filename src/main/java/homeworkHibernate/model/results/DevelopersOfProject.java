@@ -1,7 +1,7 @@
 package homeworkHibernate.model.results;
 
-import homeworkHibernate.model.Developer;
-import homeworkHibernate.model.Project;
+import homeworkHibernate.model.tables.Developer;
+import homeworkHibernate.model.tables.Project;
 
 import java.util.Set;
 

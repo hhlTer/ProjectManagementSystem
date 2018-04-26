@@ -1,6 +1,6 @@
 package homeworkHibernate.controler.commands;
 
-import homeworkHibernate.model.GenerallyTable;
+import homeworkHibernate.model.tables.GenerallyTable;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

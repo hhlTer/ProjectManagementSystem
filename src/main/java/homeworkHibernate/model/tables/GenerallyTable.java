@@ -1,4 +1,4 @@
-package homeworkHibernate.model;
+package homeworkHibernate.model.tables;
 
 public interface GenerallyTable {
     String[] getAll();

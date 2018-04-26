@@ -1,7 +1,7 @@
 package homeworkHibernate.model.mapping;
 
-import homeworkHibernate.model.Developer;
-import homeworkHibernate.model.Skill;
+import homeworkHibernate.model.tables.Developer;
+import homeworkHibernate.model.tables.Skill;
 
 import javax.persistence.*;
 

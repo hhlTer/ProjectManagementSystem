@@ -1,7 +1,7 @@
 package homeworkHibernate.controler.commands;
 
-import homeworkHibernate.model.Developer;
-import homeworkHibernate.model.Project;
+import homeworkHibernate.model.tables.Developer;
+import homeworkHibernate.model.tables.Project;
 import homeworkHibernate.model.results.ProjectCost;
 
 import java.util.Set;

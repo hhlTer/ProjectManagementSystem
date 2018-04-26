@@ -23,7 +23,7 @@ public class DialogService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(":>");
+        System.out.print(":>");
         Scanner sc = new Scanner(System.in);
         long id = 0;
         try {

@@ -1,51 +1,51 @@
-package homeworkHibernate.model;
+package homeworkHibernate.model.tables;
+
 
 import javax.persistence.*;
 
+@Table(name = "customers")
 @Entity
-@Table(name = "companies")
-public class Company implements GenerallyTable{
+public class Customer implements GenerallyTable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
-    @Column(name = "company_name")
-    private String company_name;
+    @Column(name = "customer_name")
+    private String customer_name;
 
     @Column(name = "adress")
-    private String adress;
+    private String address;
 
     public void setId(long id) {
         this.id = id;
     }
-    public void setCompany_name(String company_name) {
-        this.company_name = company_name;
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
     }
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String adress) {
+        this.address = adress;
     }
-
     public long getId() {
         return id;
     }
-    public String getCompany_name() {
-        return company_name;
+    public String getCustomer_name() {
+        return customer_name;
     }
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
     @Override
     public String toString() {
-        return String.format("Company :%s\naddress: %s\n", company_name, adress);
+        return String.format("Customer :%s\naddress: %s\n", customer_name, address);
     }
 
     public static String[] getParam(){
         return new String[]{
                 "id",
-                "company_name",
+                "customer_name",
                 "adress"
         };
     }
@@ -53,8 +53,8 @@ public class Company implements GenerallyTable{
     public String[] getAll(){
         return new String[]{
                 String.valueOf(id),
-                company_name,
-                adress
+                customer_name,
+                address
         };
     }
 
@@ -62,13 +62,13 @@ public class Company implements GenerallyTable{
     public String[] getPrm() {
         return new String[]{
                 "id",
-                "company_name",
+                "customer_name",
                 "adress"
         };
     }
 
     @Override
     public String getTableName() {
-        return "companies";
+        return "customers";
     }
 }

@@ -2,7 +2,9 @@ package homeworkHibernate.view.DialogImplementation;
 
 import homeworkHibernate.controler.commands.DoItHibernate;
 import homeworkHibernate.controler.commands.HiberInterface;
-import homeworkHibernate.model.*;
+import homeworkHibernate.model.tables.Developer;
+import homeworkHibernate.model.tables.GenerallyTable;
+import homeworkHibernate.model.tables.Project;
 import homeworkHibernate.view.dialogServise.DialogService;
 import homeworkHibernate.view.dialogServise.Table;
 
@@ -29,6 +31,7 @@ class GeneralDialog {
 
     void readDialog(Class <? extends GenerallyTable> clazz) {
         while (true) {
+            System.out.println("Enter ID:");
             long id = DialogService.getLongId();
             try {
                 generallyTable = hiberSQLMaker.getFromTableById(clazz, id);

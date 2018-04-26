@@ -1,4 +1,4 @@
-package homeworkHibernate.model;
+package homeworkHibernate.model.tables;
 
 
 import javax.persistence.*;

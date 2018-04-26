@@ -1,16 +1,13 @@
 package homeworkHibernate.view.DialogImplementation;
 
-import homeworkHibernate.controler.SessionGenerate;
+import homeworkHibernate.controler.main.SessionGenerate;
 import homeworkHibernate.controler.commands.AdvanceHQLMaker;
 import homeworkHibernate.controler.commands.AdvancedHQL;
-import homeworkHibernate.controler.commands.ProjectSQLMaker;
 import homeworkHibernate.controler.commands.SQLMaker;
-import homeworkHibernate.controler.main.JDBCStorage;
-import homeworkHibernate.model.Developer;
-import homeworkHibernate.model.GenerallyTable;
-import homeworkHibernate.model.Project;
+import homeworkHibernate.model.tables.Developer;
+import homeworkHibernate.model.tables.GenerallyTable;
+import homeworkHibernate.model.tables.Project;
 import homeworkHibernate.model.results.ProjectCost;
-import homeworkHibernate.view.MainJDBC;
 import homeworkHibernate.view.dialogServise.DialogService;
 import homeworkHibernate.view.dialogServise.Table;
 import org.hibernate.SessionFactory;
@@ -22,12 +19,10 @@ import java.util.Set;
 
 public class AdvancedDialog {
 
-    private JDBCStorage storage = MainJDBC.storage;
     private SessionFactory sessionFactory = SessionGenerate.getInstance().getSessionFactory();
-        private AdvancedHQL advancedSQL = new AdvanceHQLMaker(storage);
-        private AdvancedHQL advancedHQL = new AdvanceHQLMaker(sessionFactory.openSession());
+//        private AdvancedHQL advancedSQL = new AdvanceHQLMaker();
+        private AdvancedHQL advancedSQL = new AdvanceHQLMaker(sessionFactory.openSession());
         private CaseDialog dialog = new ProjectDialog();
-        private SQLMaker<Project> projectSQLMaker = new ProjectSQLMaker(storage);
         private Project project;
 
     public void getData(){

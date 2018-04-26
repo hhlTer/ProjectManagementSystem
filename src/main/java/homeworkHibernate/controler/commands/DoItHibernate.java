@@ -1,7 +1,7 @@
 package homeworkHibernate.controler.commands;
 
-import homeworkHibernate.controler.SessionGenerate;
-import homeworkHibernate.model.GenerallyTable;
+import homeworkHibernate.controler.main.SessionGenerate;
+import homeworkHibernate.model.tables.GenerallyTable;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

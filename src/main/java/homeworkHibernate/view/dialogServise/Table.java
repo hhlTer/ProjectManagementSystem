@@ -1,13 +1,10 @@
 package homeworkHibernate.view.dialogServise;
 
-import homeworkHibernate.model.GenerallyTable;
+import homeworkHibernate.model.tables.GenerallyTable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.Function;
-import java.util.function.IntFunction;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Table {
     public static void printAsTable(String[] nameColumn, ArrayList<String[]> arrayVolumes){

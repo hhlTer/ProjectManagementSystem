@@ -1,6 +1,6 @@
 package homeworkHibernate.view.DialogImplementation;
 
-import homeworkHibernate.model.Project;
+import homeworkHibernate.model.tables.Project;
 import homeworkHibernate.view.dialogServise.DialogService;
 
 import java.math.BigDecimal;
