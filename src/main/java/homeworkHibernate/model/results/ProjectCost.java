@@ -11,6 +11,7 @@ public class ProjectCost {
         this.projectName = projectNameInit;
     }
 
+    //test comit
     public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
